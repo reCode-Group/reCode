@@ -1,0 +1,84 @@
+.layout-main {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-bottom: 10vw;
+}
+
+.layout-footer {
+	padding: 1vw 0;
+}
+
+.demo-heading {
+	font-size: 2rem;
+	font-weight: 500;
+	margin-top: 4vw !important;
+	width: 100%;
+}
+
+.converter-container {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: flex-end;
+
+}
+
+.converter-header {
+	width: 100%;
+}
+
+#from, #to {
+	width: 38vw;
+	min-height: 25vw;
+	margin: 2vw;
+	overflow: hidden;
+
+	border-radius: 16px;
+	border-bottom-right-radius: 0 !important;
+	border: 1px solid #d3d4d6;	
+}
+
+.convert-button {
+	border: none;
+	background: #373e45;
+	color: #fff;
+
+	padding: 1vw;
+ 	margin: 0 100%;
+	border-radius: 1rem;
+
+	transition: .3s ease-in-out;
+}
+
+.convert-button:hover {
+	background: #005de0;
+}
+
+.drag-n-drop {
+	border: 2px dotted #d3d4d6;
+	margin: 1vw 0;
+	padding: 1vw;
+	width: 25vw;
+	border-radius: 16px;
+}
+
+.import-script {
+	display: flex;
+	margin-left: 9.5vw;
+	align-items: center;
+}
+
+.open-file {
+	padding: .5vw 2vw;
+	
+	background: #005de0;
+	color:#fff;
+	border: none;
+	border-radius: 8px;
+}
+
+.CodeMirror {
+	resize: vertical;
+	min-height: 25vw;
+}

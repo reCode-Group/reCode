@@ -1,0 +1,24 @@
+#feedback {
+	display: flex;
+	flex-direction: column;
+
+	visibility: hidden;
+	opacity: 0;
+	max-height: 0;
+	transform: translateX(180px);
+	overflow: hidden;
+
+	border-radius: 1rem;
+	box-shadow: 0 0 8px rgba(45,60,100,.03), 0 4px 32px rgba(45,60,100,.05);
+
+	transition: opacity .5s ease;
+}
+
+#feedback.show {
+	visibility: visible;
+	opacity: 1;
+	max-height: 800px;
+	margin: 3vw;
+	padding: 4vw;
+
+}
