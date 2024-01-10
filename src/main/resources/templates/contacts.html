@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru"
+	  xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>reCode.ru - Контакты</title>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600,700,800,300" rel="stylesheet" type="text/css">
-	<link href="../static/css/main.css" rel="stylesheet" type="text/css">
-	<link href="../static/css/contacts.css" rel="stylesheet" type="text/css">
-	<link rel="icon" href="../static/img/r6.ico">
+	<link href="/static/css/main.css"  th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+	<link href="/static/css/contacts.css" th:href="@{/css/contacts.css}" rel="stylesheet" type="text/css">
+	<link rel="icon" href="/static/img/r6.ico" th:href="@{/img/r6.ico}">
 </head>
 <body>
 	<header class="layout-header">
 		<div class="header-top">
-			<span><a class="m-l logo"><img style="width: 8.5vw;" src="../static/img/r7.png" alt=""></a></span>
+			<span><a class="m-l logo"><img style="width: 8.5vw;" src="/img/r7.png" alt=""></a></span>
 			<div class="search"><i class="bi bi-search"></i> Поиск</div>
 			<div class="header-buttons">
 				<a class="button-link">Зарегистрироваться</a>
@@ -76,7 +77,7 @@
 	<footer class="layout-footer">
 		<div class="footer-wrapper m-l m-r">
 			<div class="footer-logo-link">
-				<img style="transform: translateY(.125rem);" width="150" src="../static/img/r7.png" alt="">
+				<img style="transform: translateY(.125rem);" width="150" src="/img/r7.png" alt="">
 			</div>
 			<div class="footer-top">
 					<div class="footer-column">

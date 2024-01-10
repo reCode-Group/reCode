@@ -8,13 +8,14 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600,700,800,300" rel="stylesheet"
           type="text/css">
     <link href="/static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
-    <link rel="icon" href="/static/img/r6.ico">
-    <link rel="stylesheet" href="https://cdn.misdeliver.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="icon" href="/static/img/r6.ico" th:href="@{/img/r6.ico}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
 <header class="layout-header">
     <div class="header-top">
-        <span><a class="m-l logo"><img style="width: 8.5vw;" src="../static/img/r7.png" alt=""></a></span>
+        <span><a class="m-l logo"><img style="width: 8.5vw;" src="img/r7.png"
+                                       alt=""></a></span>
         <div class="search"><i class="bi bi-search"></i> Поиск</div>
         <div class="header-buttons">
             <a class="button-link">Зарегистрироваться</a>
@@ -39,7 +40,7 @@
                           d="M3.29297 6.70711C3.68349 6.31658 4.31666 6.31658 4.70718 6.70711L12.0001 14L19.293 6.70711C19.6835 6.31658 20.3167 6.31658 20.7072 6.70711L21.4143 7.41421C21.8048 7.80474 21.8048 8.4379 21.4143 8.82843L13.0607 17.182C12.4749 17.7678 11.5252 17.7678 10.9394 17.182L2.58586 8.82843C2.19534 8.4379 2.19534 7.80474 2.58586 7.41422L3.29297 6.70711Z"/>
                 </svg>
             </a>
-            <a class="nav-link" href="/templates/contacts.html">Помощь</a>
+            <a class="nav-link" href="./contacts">Помощь</a>
         </nav>
         <a class="button-link d-button m-l-auto m-r">Подробнее</a>
     </div>
@@ -56,8 +57,10 @@
             <a class="button-link m-button" href="">Начать работу</a>
         </div>
         <div class="hero-right m-r">
-            <!--            <video src="./video/v4.webm" playsinline autoplay muted loop preload="auto" autoplay="" disablepictureinpicture="" controlslist="nodownload noplaybackrate" data-qa="video-player" playsinline="" loop=""></video>-->
-            <!-- <video preload="auto" autoplay src="./video/v4.webm" loop></video> -->
+            <video src="video/v4.webm" playsinline autoplay muted preload="auto"
+                   disablepictureinpicture="" controlslist="nodownload noplaybackrate" data-qa="video-player"
+                   loop=""></video>
+            <video preload="auto" autoplay src="video/v4.webm" loop></video>
         </div>
     </section>
     <section class="features m-l m-r">
@@ -133,7 +136,7 @@
 <footer class="layout-footer">
     <div class="footer-wrapper m-l m-r">
         <div class="footer-logo-link">
-            <img style="transform: translateY(2px);" width="150" src="../static/img/r7.png" alt="">
+            <img style="transform: translateY(2px);" width="150" src="/img/r7.png" alt="">
         </div>
         <div class="footer-top">
             <div class="footer-column">
