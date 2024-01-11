@@ -63,7 +63,7 @@
         </div>
         <div class="converter-right">
             <div class="export-script">
-                <button class="copy-btn button-link l-button"><i class="bi bi-copy"></i> Копировать</button>
+                <button class="copy-btn button-link l-button" onclick="copyFunction()"><i class="bi bi-copy"></i> Копировать</button>
                 <button style="color: #005de0; font-weight: 500;" class="save-file button-link l-button">Скачать
                 </button>
             </div>
@@ -118,6 +118,13 @@
         </div>
     </div>
 </footer>
+
+<script>
+function copyFunction() {
+     navigator.clipboard.writeText(toEditor.getValue());
+}
+</script>
+
 
 <script>
     var fromEditor = CodeMirror(document.querySelector('.converter-left .editor'), {
