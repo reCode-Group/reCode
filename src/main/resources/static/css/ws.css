@@ -1,8 +1,8 @@
 .layout-main {
 	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	margin-bottom: 10vw;
+	flex-direction: column;
+	align-items: center;
+	margin: 0 9.5vw;
 }
 
 .layout-footer {
@@ -12,26 +12,20 @@
 .demo-heading {
 	font-size: 2rem;
 	font-weight: 500;
-	margin-top: 4vw !important;
-	width: 100%;
+	margin-top: 2.5vw !important;
+	margin-bottom: 1vw !important;
 }
 
 .converter-container {
 	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	align-items: flex-end;
-
-}
-
-.converter-header {
 	width: 100%;
+	justify-content: space-between;
+	align-items: flex-end;
 }
 
 #from, #to {
 	width: 38vw;
 	min-height: 25vw;
-	margin: 2vw;
 	overflow: hidden;
 
 	border-radius: 16px;
@@ -45,7 +39,7 @@
 	color: #fff;
 
 	padding: 1vw;
- 	margin: 0 100%;
+ 	margin: 2vw 0;
 	border-radius: 1rem;
 
 	transition: .3s ease-in-out;
@@ -57,24 +51,25 @@
 
 .drag-n-drop {
 	border: 2px dotted #d3d4d6;
-	margin: 1vw 0;
 	padding: 1vw;
 	width: 25vw;
-	border-radius: 16px;
+	border-radius: 12px;
 }
 
 .import-script {
 	display: flex;
-	margin-left: 9.5vw;
-	align-items: center;
+	margin: .5vw 0; 
 }
 
-.open-file {
-	padding: .5vw 2vw;
-	
-	background: #005de0;
-	color:#fff;
-	border: none;
+.export-script {
+	display: flex;
+	justify-content: flex-end;
+	margin: .5vw 0; 
+}
+
+.open-file, .save-file, .copy-btn {
+	background: white;
+	padding: 1vw .8vw;
 	border-radius: 8px;
 }
 

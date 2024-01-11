@@ -16,7 +16,9 @@ class StaticResourceConfiguration   {
             .addResourceLocations("file:ext-resources/")
             .setCachePeriod(0)
 
-
+        registry.addResourceHandler("/codemirror/**")
+            .addResourceLocations("file:ext-resources/")
+            .setCachePeriod(0)
 
     }
 }
