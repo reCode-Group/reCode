@@ -286,7 +286,7 @@ svg {
 
 .carousel-item {
 	display: inline-block;
-	margin: 1vw;
+	margin: 1vw  2vw;
 }
 
 .partners-carousel::before,
@@ -310,6 +310,76 @@ svg {
 
 .c-icon {
 	height: 4vw;
+}
+
+.quick-start {
+	display: flex;
+	justify-content: space-between;
+	margin: 4vw 0;
+}
+
+.quick-heading {
+	font-size: 2rem;
+	font-weight: 600;
+}
+
+.quick-desc {
+	width: 25vw;
+	font-size: 1.3rem;
+	line-height: 1.8rem;
+}
+
+.quick-start .split-left {
+	margin-right: 10vw;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.q-button {
+	margin: 2vw 0;
+	padding: 1rem 2.5vw;
+}
+
+.team {
+	margin: 4vw 0;
+}
+
+.team-container {
+	display: flex;
+	justify-content: space-between;
+	margin: 2vw 0;
+}
+
+.team-item {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background:#f8f8fa;
+
+	padding: 2vw 0;
+	width: 15vw;
+	height: 16vw;
+	border-radius: 1rem;
+}
+
+.t-name {
+	font-size: 1.2rem;
+	font-weight: 500;
+	margin: 1vw 0;
+}
+
+.t-img {
+	width: 6vw;
+	height: 6vw;
+	border-radius: 50%;
+	overflow: hidden;
+	/* padding: 5px; */
+	border: 1px solid #d3d4d6;
+}
+
+.t-role {
+	text-align: center;
 }
 
 .footer-links {

@@ -1,35 +1,42 @@
 <!DOCTYPE html>
-<html lang="ru"
-	  xmlns:th="http://www.thymeleaf.org">
+<html lang="ru">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Вход в рабочее пространство reCode.ru</title>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600,700,800,300" rel="stylesheet" type="text/css">
-	<link href="../static/css/main.css" rel="stylesheet" type="text/css">
-	<link rel="icon" href="../static/img/r6.ico">
+	<link href="./css/login.css" rel="stylesheet" type="text/css">
+	<link rel="icon" href="./img/r6.ico">
 </head>
 <body>
 	<div class="login-form">
 		<a class="logo">
-			<img style="height: 2.5vw;" src="../artimake/img/r7.png" alt="">
+			<img style="height: 2.5vw;" src="./img/r7.png" alt="">
 		</a>
-		<p style="display: flex;" class="attention">Еще нет аккаунта?
-			<a style="margin-left: auto;" class="reg-link" href="">Зарегистрироваться</a>
+		<p class="attention">Еще нет аккаунта?
+			<a style="margin-left: 10px;" class="reg-link" href="">Зарегистрироваться</a>
 		</p>
 		<form class="form">
-			<label for="email" class="">E-mail</label>
-			<input id="email" required="" name="email" value="" type="text" autofocus="" autocomplete="off" placeholder="example@test.ru" class="sc-base-input sc-simple-input">
-			<label for="password" class="">Пароль</label>
-			<input id="password" required="" class="sc-base-input sc-simple-input" placeholder="••••••••" name="password" type="password" autocomplete="off">
-			<div>
-				<label>
+			<label for="email" class="l-label">E-mail</label>
+			<input id="email" class="text-input" required="" name="email" value="" type="text" autofocus="" autocomplete="off" placeholder="example@test.ru">
+			<label for="password" class="l-label">Пароль</label>
+			<input id="password" class="text-input" required="" placeholder="••••••••" name="password" type="password" autocomplete="off">
+			<div class="remember l-label">
+				<label style="display: flex;">
 					<input id="remember-me" name="remember_me" type="checkbox" checked="">
 					Запомнить меня
 				</label>
 				<a href="" id="ask-reset">Восстановить пароль</a>
 			</div>
-			<button name="login" id="login" type="submit">Войти
+			<button name="login" id="login" type="submit">Войти</button>
+			<span class="split-line l-label">или</span>
+			<button id="yandex-btn">
+				<img style="margin-right: .5vw;" height="18px" src="./img/yandex.png" alt="">
+				Войти c Яндекс ID
+			</button>
+			<button id="mail-btn">
+				<img style="margin-right: .5vw;" height="40px" src="./img/mailru.png" alt="">
+				Вход через Mail.ru
 			</button>
 		</form>
 	</div>
