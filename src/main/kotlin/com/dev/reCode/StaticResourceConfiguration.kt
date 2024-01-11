@@ -20,5 +20,9 @@ class StaticResourceConfiguration   {
             .addResourceLocations("file:ext-resources/")
             .setCachePeriod(0)
 
+        registry.addResourceHandler("/js/**")
+            .addResourceLocations("file:ext-resources/")
+            .setCachePeriod(0)
+
     }
 }

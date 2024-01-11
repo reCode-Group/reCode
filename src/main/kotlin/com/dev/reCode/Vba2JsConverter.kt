@@ -82,8 +82,6 @@ class  Vba2JsConverter {
             так как появляется строка и ее потом нужно спрятать.
         */
 
-
-
         s = hideStrings(s)
 
 
@@ -102,8 +100,7 @@ class  Vba2JsConverter {
         a = a.filter { it.isNotBlank() }.toMutableList()
 
         // Fix FUNCTION tags
-//    a[0] = Regex("function\\s+", RegexOption.IGNORE_CASE).replace(a[0], "")
-//    fx = Regex("^\\w+").find(a[0])!!.value
+
         a[0] = a[0].replace(fx.toRegex(), "").replace("[()]".toRegex(), "")
         a[0] = a[0].replace("\\bbyval\\b".toRegex(RegexOption.IGNORE_CASE), "")
             .replace("\\bbyref\\b".toRegex(RegexOption.IGNORE_CASE), "")
@@ -111,7 +108,6 @@ class  Vba2JsConverter {
         a[0] = a[0].replace("\\bas\\s+\\w+\\b".toRegex(RegexOption.IGNORE_CASE), "")
         a[0] = a[0].replace("\\s+".toRegex(), "")
         a[0] = a[0].replace(",".toRegex(), ", ")
-//    fxHead = "fun $fx (${a[0]}) {"
         fxHead = "(function(){"
         a[0] = ""
         // Remove END FUNCTION tags
