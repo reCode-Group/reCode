@@ -4,25 +4,19 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 
 
-
 @Configuration
-class StaticResourceConfiguration   {
+class StaticResourceConfiguration {
     fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry.addResourceHandler("/img/**")
-            .addResourceLocations("file:ext-resources/")
-            .setCachePeriod(0)
+        FILE_PATH_PATTERNS.forEach { pattern ->
+            registry.addResourceHandler(pattern)
+                .addResourceLocations(RESOURCE_LOCATION)
+                .setCachePeriod(CACHE_PERIOD)
+        }
+    }
 
-        registry.addResourceHandler("/video/**")
-            .addResourceLocations("file:ext-resources/")
-            .setCachePeriod(0)
-
-        registry.addResourceHandler("/codemirror/**")
-            .addResourceLocations("file:ext-resources/")
-            .setCachePeriod(0)
-
-        registry.addResourceHandler("/js/**")
-            .addResourceLocations("file:ext-resources/")
-            .setCachePeriod(0)
-
+    private companion object {
+        const val CACHE_PERIOD = 0
+        const val RESOURCE_LOCATION = "file:ext-resources/"
+        val FILE_PATH_PATTERNS = listOf("/img/**", "/video/**", "/codemirror/**", "/js/**")
     }
 }

@@ -6,19 +6,20 @@ import org.springframework.stereotype.Service
 
 @Service
 class RestApiService {
-
     fun convert(inputData: String): ConverterResponse {
         println("Полученные данные: $inputData")
-        // Верните представление или перенаправление, как вам нужно
-        val response = ConverterResponse()
-        try {
-            val converter = Vba2JsConverter()
-            response.data = converter.vbsToJs(inputData)
-            response.status = "200"
+        return try {
+            ConverterResponse(
+                data = Vba2JsConverter().vbsToJs(inputData),
+                status = CODE_SUCCESS
+            )
         } catch (e: Exception) {
-            response.status = "500"
+            ConverterResponse(status = CODE_ERROR)
         }
-        return response
     }
 
+    private companion object {
+        const val CODE_ERROR = "500"
+        const val CODE_SUCCESS = "200"
+    }
 }

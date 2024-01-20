@@ -3,7 +3,7 @@ package com.dev.reCode
 import java.util.*
 
 
-class  Vba2JsConverter {
+class Vba2JsConverter {
 //    fun main() {
 //        val examples: List<String> = listOf(
 //            """Sub Example()
@@ -269,9 +269,7 @@ class  Vba2JsConverter {
         }
 
         //добавление break в конструкции switch-case
-
         var i = 1
-
         while (i < a.size) {
             if (a[i].matches(Regex(".*case\\s.*", RegexOption.IGNORE_CASE)) && a[i - 1].matches(Regex("[^{]+\$"))) {
                 a.add(i, "break;")
@@ -279,11 +277,6 @@ class  Vba2JsConverter {
             }
             i++
         }
-
-
-
-
-
 
         vars = vars.replace(Regex("\\s*AS\\s+\\w+\\s*", RegexOption.IGNORE_CASE), "")
         if (vars.isNotBlank())
@@ -306,7 +299,7 @@ class  Vba2JsConverter {
         return jsIndenter(ss)
     }
 
-    fun jsIndenter(js: String): String {
+    private fun jsIndenter(js: String): String {
         var a = js.split("\n", "\tvar").toMutableList()
         var s = ""
         var margin = 0
@@ -346,13 +339,10 @@ class  Vba2JsConverter {
             a[i] = strFill(margin, " ") + a[i]
         }
 
-
-
-
         return a.joinToString("\n")
     }
 
-    fun strFill(count: Int, strToFill: String): String {
+    private fun strFill(count: Int, strToFill: String): String {
         var objStr = ""
         for (idx in 1..count) {
             objStr += strToFill
@@ -361,7 +351,7 @@ class  Vba2JsConverter {
     }
 
 
-    fun hideStrings(text: String): String {
+    private fun hideStrings(text: String): String {
         val x = 7.toChar().toString()
         val xxx = 8.toChar().toString()
 
@@ -389,7 +379,7 @@ class  Vba2JsConverter {
         return newText
     }
 
-    fun unHideStrings(text: String): String {
+    private fun unHideStrings(text: String): String {
         val x = 7.toChar().toString()
         var newText = text
         for (i in 0..<strs.size) {

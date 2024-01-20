@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping
 @Controller
 class RegistrationController {
     @GetMapping("/registration")
-    fun contactsMain(): String{
+    fun contactsMain(): String {
         return "registration"
     }
 }

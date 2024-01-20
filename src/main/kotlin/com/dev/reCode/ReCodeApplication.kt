@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class ReCodeApplication
 
 fun main(args: Array<String>) {
-	runApplication<ReCodeApplication>(*args)
+    runApplication<ReCodeApplication>(*args)
 }
