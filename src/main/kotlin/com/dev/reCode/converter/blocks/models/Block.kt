@@ -1,3 +1,3 @@
 package com.dev.reCode.converter.blocks.models
 
-open class Block(val inner: List<Block> = listOf())
+open class Block(var inner: List<Block> = listOf())

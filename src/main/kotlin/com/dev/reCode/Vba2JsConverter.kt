@@ -1,12 +1,25 @@
 package com.dev.reCode
 
 import java.util.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.runBlocking
 
 
 class Vba2JsConverter {
+    fun vbaToJs(input: String) : String = runBlocking{
+        val pattern = "(?i)sub.*?end sub".toRegex(RegexOption.DOT_MATCHES_ALL)
+        val functions = pattern.findAll(input).map { it.value }.toList()
+        val deferredResults = functions.map { item ->
+            async { thProcess(item) }
+        }
+        val results = deferredResults.awaitAll()
+        return@runBlocking results.joinToString(separator = "\n")
+    }
 
-    var strs = mutableListOf<String>()
-    fun vbsToJs(vbs: String): String {
+
+    private  var strs = mutableListOf<String>()
+    private fun thProcess(vbs: String): String {
         var s = vbs
         var vars = ""
         var fx = ""
@@ -316,7 +329,6 @@ class Vba2JsConverter {
                 f = -1  // Выход из цикла, если не удалось найти больше вхождений
             }
         }
-
         return newText
     }
 
