@@ -55,7 +55,7 @@ End Sub"""
     fun `Second test`() {
         assertEquals(
             v.vbaToJs(
-                """Sub Example()
+                """Sцуub Example()
     Cells(3, 4)="Hello world"
 End Sub"""
             ), """(function(){
