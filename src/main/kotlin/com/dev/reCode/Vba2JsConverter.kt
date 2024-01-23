@@ -22,12 +22,13 @@ class Vba2JsConverter {
     private fun thProcess(vbs: String): String {
         var s = vbs
         var vars = ""
-        var fx = ""
-        var fxHead = ""
+        val fx = ""
 
         // prep function block
         s = s.replace("Sub", "(function(){")
+
         s = hideStrings(s)
+
 
         s = s.replace("&".toRegex(), "+")
         s = s.replace("_\n".toRegex(), "")
@@ -52,7 +53,7 @@ class Vba2JsConverter {
         a[0] = a[0].replace("\\bas\\s+\\w+\\b".toRegex(RegexOption.IGNORE_CASE), "")
         a[0] = a[0].replace("\\s+".toRegex(), "")
         a[0] = a[0].replace(",".toRegex(), ", ")
-        fxHead = "(function(){"
+        val fxHead = "(function(){"
         a[0] = ""
         // Remove END FUNCTION tags
         a = a.dropLast(1).toTypedArray().toMutableList()
@@ -108,7 +109,7 @@ class Vba2JsConverter {
                 a[i] = a[i].replace("'nothing'".toRegex(RegexOption.IGNORE_CASE), "null")
             } else if (Regex("^\\bFOR\\b\\s+", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = a[i].replace("^\\bFOR\\b\\s+".toRegex(RegexOption.IGNORE_CASE), "")
-                val counter = Regex("^\\w+").find(a[i])!!.value
+                val counter = Regex("[а-я\\w]+", RegexOption.IGNORE_CASE).find(a[i])!!.value
                 val from = Regex("=\\s*[\\w\\(\\)]+").find(a[i])!!.value.replace("=", "").replace("\\s+".toRegex(), "")
                 a[i] = a[i].replace(counter.toRegex(), "").replace(from.toRegex(), "")
                     .replace("\\bTO\\b".toRegex(RegexOption.IGNORE_CASE), "")
@@ -258,7 +259,6 @@ class Vba2JsConverter {
 
     private fun jsIndenter(js: String): String {
         var a = js.split("\n", "\tvar").toMutableList()
-        var s = ""
         var margin = 0
 
         // trim
