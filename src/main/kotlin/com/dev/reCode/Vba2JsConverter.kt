@@ -7,7 +7,7 @@ import kotlinx.coroutines.runBlocking
 
 
 class Vba2JsConverter {
-    fun vbaToJs(input: String) : String = runBlocking{
+    fun vbaToJs(input: String): String = runBlocking {
         val pattern = "(?i)sub.*?end sub".toRegex(RegexOption.DOT_MATCHES_ALL)
         val functions = pattern.findAll(input).map { it.value }.toList()
         val deferredResults = functions.map { item ->
@@ -18,7 +18,7 @@ class Vba2JsConverter {
     }
 
 
-    private  var strs = mutableListOf<String>()
+    private var strs = mutableListOf<String>()
     private fun thProcess(vbs: String): String {
         var s = vbs
         var vars = ""
@@ -27,17 +27,7 @@ class Vba2JsConverter {
 
         // prep function block
         s = s.replace("Sub", "(function(){")
-
-
-        /*
-        TODO
-            Написать тут код преобразования для
-            Cells(3, 4)="Hello world" --->>> Api.GetActiveSheet().GetRange("C4").SetValue("Hello world");
-            так как появляется строка и ее потом нужно спрятать.
-        */
-
         s = hideStrings(s)
-
 
         s = s.replace("&".toRegex(), "+")
         s = s.replace("_\n".toRegex(), "")
@@ -99,6 +89,19 @@ class Vba2JsConverter {
                     "Api.GetActiveSheet().GetRange${Regex("Range(.*).Interior").find(a[i])!!.groupValues[1]}.SetFillColor(Api.CreateColorFromRGB${
                         Regex("RGB(.*)").find(a[i])!!.groupValues[1]
                     });"
+
+            } else if (Regex(
+                    "\\bcells\\([0-9]+\\s*,\\s*[0-9]+\\s*\\)\\s*=",
+                    RegexOption.IGNORE_CASE
+                ).containsMatchIn(a[i])
+            ) {
+//             Cells(3, 4)="Hello world" --->>> Api.GetActiveSheet().GetRange("C4").SetValue("Hello world");
+                val (cInt, r) = Regex(
+                    "\\bcells\\(([0-9]+)\\s*,\\s*([0-9]+)\\s*\\)",
+                    RegexOption.IGNORE_CASE
+                ).findAll(a[i])
+                    .map { Pair(it.groupValues[1].toInt(), it.groupValues[2].toInt()) }.toList()[0]
+                a[i] = "Api.GetActiveSheet().GetRange(${addHideString("\"${convertToAlphabet(cInt)}$r\"")}).SetValue(\"Hello world\")"
             } else if (Regex("(?<![a-zA-Z])ActiveSheet.*", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = a[i].replace("ActiveSheet".toRegex(RegexOption.IGNORE_CASE), "Api.GetActiveSheet()")
             } else if (Regex("'nothing'").containsMatchIn(a[i])) {
@@ -342,5 +345,23 @@ class Vba2JsConverter {
         newText = newText.replace("\\x08", "\\\"")
         newText = newText.replace("\"\"", "\\\"")
         return newText
+    }
+
+
+    private fun convertToAlphabet(n: Int): String {
+        var result = ""
+        var num = n
+        while (num > 0) {
+            num--
+            result = (num % 26 + 65).toChar() + result
+            num /= 26
+        }
+        return result.uppercase(Locale.getDefault())
+    }
+
+    private fun addHideString(toHide: String): String {
+        val x = 7.toChar().toString()
+        strs += "${toHide}"
+        return "$x${strs.size - 1}$x"
     }
 }
