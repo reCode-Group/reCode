@@ -16,7 +16,7 @@ class VbaJsConverterTest {
     fun `First test`() {
         assertEquals(
             v.vbaToJs(
-                """Sыввыub Example()
+                """Sub Example()
     Dim myRrrrange
     Dim result
     Dim Run As Long
