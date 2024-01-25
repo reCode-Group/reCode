@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Вход в рабочее пространство reCode.ru</title>
+	<link rel="icon" th:href="@{/img/r6.ico}">
+	<link rel="stylesheet" th:href="@{/css/login.css}" type="text/css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600,700,800,300" rel="stylesheet" type="text/css">
-	<link href="./css/login.css" rel="stylesheet" type="text/css">
-	<link rel="icon" href="./img/r6.ico">
+	<link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600,700,800" as="font">
 </head>
 <body>
 	<div class="login-form">
-		<a class="logo">
-			<img style="height: 2.5vw;" src="./img/r7.png" alt="">
+		<a class="logo" th:href="@{/}">
+			<img style="height: 2.5vw;" src="/img/r7.png" alt="">
 		</a>
-		<a class="attention back-link" href=""><i class="bi bi-arrow-left-short"></i><span>У меня уже есть аккаунт</span></a>
+		<a class="attention back-link" th:href="@{/login}"><i class="bi bi-arrow-left-short"></i><span>У меня уже есть аккаунт</span></a>
 		<form class="form">
 			<div class="account-type">
 				<div class="type-left active">Для физлиц и юрлиц</div>

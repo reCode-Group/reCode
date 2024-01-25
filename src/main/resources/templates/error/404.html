@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reCode — конвертер скриптов и VBA макросов</title>
+    <link rel="icon" th:href="@{/img/r6.ico}">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600,700,800" as="font">
+    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
+    <header class="layout-header">
+        <div class="header-top">
+            <a class="m-l logo" th:href="@{/}">
+                <img style="width: 9rem" src="/img/r7.png" alt="reCode.ru">
+            </a>
+            <div class="search">Поиск</div>
+            <div style="margin-left: auto">
+                <a class="button-link" th:href="@{/registration}">Зарегистрироваться</a>
+                <a class="button-link l-button m-r" th:href="@{/login}">Войти
+                    <svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20,21V3H13a1,1,0,0,1,0-2h8a1,1,0,0,1,1,1V22a1,1,0,0,1-1,1H13a1,1,0,0,1,0-2ZM2,12a1,1,0,0,0,1,1H14.586l-2.293,2.293a1,1,0,1,0,1.414,1.414l4-4a1,1,0,0,0,0-1.414l-4-4a1,1,0,1,0-1.414,1.414L14.586,11H3A1,1,0,0,0,2,12Z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="header-bottom">
+            <nav class="m-l navbar">
+                <a class="nav-link" href="#about">О стартапе</a>
+                <a class="nav-link" th:href="@{/workspace}">Демо-версия</a>
+                <a class="nav-link" th:href="@{/blank}">Мастерская макросов</a>
+                <a class="nav-link" href="#partners">Партнеры</a>
+                <a class="nav-link" th:href="@{/}">Ресурсы
+                    <svg width="13" height="13" viewBox="0 -3 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.29297 6.70711C3.68349 6.31658 4.31666 6.31658 4.70718 6.70711L12.0001 14L19.293 6.70711C19.6835 6.31658 20.3167 6.31658 20.7072 6.70711L21.4143 7.41421C21.8048 7.80474 21.8048 8.4379 21.4143 8.82843L13.0607 17.182C12.4749 17.7678 11.5252 17.7678 10.9394 17.182L2.58586 8.82843C2.19534 8.4379 2.19534 7.80474 2.58586 7.41422L3.29297 6.70711Z"/></svg>
+                </a>
+                <a class="nav-link" th:href="@{/contacts}">Помощь</a>
+            </nav>
+            <a class="button-link d-button m-l-auto m-r" href="#quick-start">Подробнее</a>
+        </div>
+    </header>
+<main><h1>404</h1></main>
 
+<script defer src="js/carousel.js"></script>
 </body>
 </html>
