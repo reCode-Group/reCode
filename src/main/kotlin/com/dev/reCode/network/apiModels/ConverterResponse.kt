@@ -7,7 +7,7 @@ import lombok.Setter
 @Data
 @Getter
 @Setter
-class ConverterResponse {
-    var status: String? = null
-    var data: String? = null
-}
+data class ConverterResponse(
+    val status: String? = null,
+    val data: String? = null
+)

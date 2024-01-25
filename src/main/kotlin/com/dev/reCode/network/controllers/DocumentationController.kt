@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping
 @Controller
 class DocumentationController {
     @GetMapping("/documentation")
-    fun documentation(): String{
+    fun documentation(): String {
         return "documentation"
     }
 }

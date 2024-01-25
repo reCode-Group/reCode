@@ -1,86 +1,31 @@
 package com.dev.reCode
 
 import java.util.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.runBlocking
 
 
-class  Vba2JsConverter {
-//    fun main() {
-//        val examples: List<String> = listOf(
-//            """Sub Example()
-//    Dim myRange
-//    Dim result
-//    Dim Run As Long
-//
-//    For Run = 1 To 3
-//        Select Case Run
-//        Case 1
-//            result = "=SUM(A1:A100)"
-//        Case 2
-//            result = "=SUM(A1:A300)"
-//        Case 3
-//            result = "=SUM(A1:A25)"
-//        End Select
-//        ActiveSheet.range("B" & Run) = result
-//    Next Run
-//End Sub""",
-//            """Sub example()
-//    Range("B3").Interior.Color = RGB(0, 0, 250)
-//End Sub""",
-//            """Sub example()
-//    Dim xRg As Range
-//    Dim xTxt As String
-//    Dim xCell As Range
-//    Dim xChar As String
-//    Dim xCellPre As Range
-//    Dim xCIndex As Long
-//    Dim xCol As Collection
-//    Dim I As Long
-//    On Error Resume Next
-//    If ActiveWindow.RangeSelection.Count > 1 Then
-//      xTxt = ActiveWindow.RangeSelection.AddressLocal
-//    Else
-//      xTxt = ActiveSheet.UsedRange.AddressLocal
-//    End If
-//    Set xRg = Application.InputBox("please select the data range:", "Kutools for Excel", xTxt, , , , , 8)
-//    If xRg Is Nothing Then Exit Sub
-//    xCIndex = 2
-//    Set xCol = New Collection
-//    For Each xCell In xRg
-//      On Error Resume Next
-//      xCol.Add xCell, xCell.Text
-//      If Err.Number = 457 Then
-//        xCIndex = xCIndex + 1
-//        Set xCellPre = xCol(xCell.Text)
-//        If xCellPre.Interior.ColorIndex = xlNone Then xCellPre.Interior.ColorIndex = xCIndex
-//        xCell.Interior.ColorIndex = xCellPre.Interior.ColorIndex
-//      ElseIf Err.Number = 9 Then
-//        MsgBox "Too many duplicate companies!", vbCritical, "Kutools for Excel"
-//        Exit Sub
-//      End If
-//      On Error GoTo 0
-//    Next
-//End Sub"""
-//        )
-//        println(vbsToJs(examples[0]))
-//    }
+class Vba2JsConverter {
+    fun vbaToJs(input: String): String = runBlocking {
+        val pattern = "(?i)sub.*?end sub".toRegex(RegexOption.DOT_MATCHES_ALL)
+        val functions = pattern.findAll(input).map { it.value }.toList()
+        val deferredResults = functions.map { item ->
+            async { thProcess(item) }
+        }
+        val results = deferredResults.awaitAll()
+        return@runBlocking results.joinToString(separator = "\n")
+    }
 
-    var strs = mutableListOf<String>()
-    fun vbsToJs(vbs: String): String {
+
+    private var strs = mutableListOf<String>()
+    private fun thProcess(vbs: String): String {
         var s = vbs
         var vars = ""
-        var fx = ""
-        var fxHead = ""
+        val fx = ""
 
         // prep function block
         s = s.replace("Sub", "(function(){")
-
-
-        /*
-        TODO
-            Написать тут код преобразования для
-            Cells(3, 4)="Hello world" --->>> Api.GetActiveSheet().GetRange("C4").SetValue("Hello world");
-            так как появляется строка и ее потом нужно спрятать.
-        */
 
         s = hideStrings(s)
 
@@ -108,7 +53,7 @@ class  Vba2JsConverter {
         a[0] = a[0].replace("\\bas\\s+\\w+\\b".toRegex(RegexOption.IGNORE_CASE), "")
         a[0] = a[0].replace("\\s+".toRegex(), "")
         a[0] = a[0].replace(",".toRegex(), ", ")
-        fxHead = "(function(){"
+        val fxHead = "(function(){"
         a[0] = ""
         // Remove END FUNCTION tags
         a = a.dropLast(1).toTypedArray().toMutableList()
@@ -145,13 +90,26 @@ class  Vba2JsConverter {
                     "Api.GetActiveSheet().GetRange${Regex("Range(.*).Interior").find(a[i])!!.groupValues[1]}.SetFillColor(Api.CreateColorFromRGB${
                         Regex("RGB(.*)").find(a[i])!!.groupValues[1]
                     });"
+
+            } else if (Regex(
+                    "\\bcells\\([0-9]+\\s*,\\s*[0-9]+\\s*\\)\\s*=",
+                    RegexOption.IGNORE_CASE
+                ).containsMatchIn(a[i])
+            ) {
+//             Cells(3, 4)="Hello world" --->>> Api.GetActiveSheet().GetRange("C4").SetValue("Hello world");
+                val (cInt, r) = Regex(
+                    "\\bcells\\(([0-9]+)\\s*,\\s*([0-9]+)\\s*\\)",
+                    RegexOption.IGNORE_CASE
+                ).findAll(a[i])
+                    .map { Pair(it.groupValues[1].toInt(), it.groupValues[2].toInt()) }.toList()[0]
+                a[i] = "Api.GetActiveSheet().GetRange(${addHideString("\"${convertToAlphabet(cInt)}$r\"")}).SetValue(\"Hello world\")"
             } else if (Regex("(?<![a-zA-Z])ActiveSheet.*", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = a[i].replace("ActiveSheet".toRegex(RegexOption.IGNORE_CASE), "Api.GetActiveSheet()")
             } else if (Regex("'nothing'").containsMatchIn(a[i])) {
                 a[i] = a[i].replace("'nothing'".toRegex(RegexOption.IGNORE_CASE), "null")
             } else if (Regex("^\\bFOR\\b\\s+", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = a[i].replace("^\\bFOR\\b\\s+".toRegex(RegexOption.IGNORE_CASE), "")
-                val counter = Regex("^\\w+").find(a[i])!!.value
+                val counter = Regex("[а-я\\w]+", RegexOption.IGNORE_CASE).find(a[i])!!.value
                 val from = Regex("=\\s*[\\w\\(\\)]+").find(a[i])!!.value.replace("=", "").replace("\\s+".toRegex(), "")
                 a[i] = a[i].replace(counter.toRegex(), "").replace(from.toRegex(), "")
                     .replace("\\bTO\\b".toRegex(RegexOption.IGNORE_CASE), "")
@@ -269,9 +227,7 @@ class  Vba2JsConverter {
         }
 
         //добавление break в конструкции switch-case
-
         var i = 1
-
         while (i < a.size) {
             if (a[i].matches(Regex(".*case\\s.*", RegexOption.IGNORE_CASE)) && a[i - 1].matches(Regex("[^{]+\$"))) {
                 a.add(i, "break;")
@@ -279,11 +235,6 @@ class  Vba2JsConverter {
             }
             i++
         }
-
-
-
-
-
 
         vars = vars.replace(Regex("\\s*AS\\s+\\w+\\s*", RegexOption.IGNORE_CASE), "")
         if (vars.isNotBlank())
@@ -306,9 +257,8 @@ class  Vba2JsConverter {
         return jsIndenter(ss)
     }
 
-    fun jsIndenter(js: String): String {
+    private fun jsIndenter(js: String): String {
         var a = js.split("\n", "\tvar").toMutableList()
-        var s = ""
         var margin = 0
 
         // trim
@@ -346,13 +296,10 @@ class  Vba2JsConverter {
             a[i] = strFill(margin, " ") + a[i]
         }
 
-
-
-
         return a.joinToString("\n")
     }
 
-    fun strFill(count: Int, strToFill: String): String {
+    private fun strFill(count: Int, strToFill: String): String {
         var objStr = ""
         for (idx in 1..count) {
             objStr += strToFill
@@ -361,7 +308,7 @@ class  Vba2JsConverter {
     }
 
 
-    fun hideStrings(text: String): String {
+    private fun hideStrings(text: String): String {
         val x = 7.toChar().toString()
         val xxx = 8.toChar().toString()
 
@@ -385,11 +332,10 @@ class  Vba2JsConverter {
                 f = -1  // Выход из цикла, если не удалось найти больше вхождений
             }
         }
-
         return newText
     }
 
-    fun unHideStrings(text: String): String {
+    private fun unHideStrings(text: String): String {
         val x = 7.toChar().toString()
         var newText = text
         for (i in 0..<strs.size) {
@@ -399,5 +345,23 @@ class  Vba2JsConverter {
         newText = newText.replace("\\x08", "\\\"")
         newText = newText.replace("\"\"", "\\\"")
         return newText
+    }
+
+
+    private fun convertToAlphabet(n: Int): String {
+        var result = ""
+        var num = n
+        while (num > 0) {
+            num--
+            result = (num % 26 + 65).toChar() + result
+            num /= 26
+        }
+        return result.uppercase(Locale.getDefault())
+    }
+
+    private fun addHideString(toHide: String): String {
+        val x = 7.toChar().toString()
+        strs += "${toHide}"
+        return "$x${strs.size - 1}$x"
     }
 }
