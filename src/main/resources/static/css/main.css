@@ -653,8 +653,8 @@ svg {
 
 /* BREADCRUMBS */
 
-.Contacts_breadcrumbs {
-	margin-bottom: 1vw;
+.contacts-breadcrumbs {
+	margin: 2vw 0;
 }
 
 .breadcrumb-container {

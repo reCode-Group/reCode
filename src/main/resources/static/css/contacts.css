@@ -22,3 +22,17 @@
 	padding: 4vw;
 
 }
+
+.contacts {
+	margin-top: 4vw;
+	margin-bottom: 4vw;
+}
+
+.contacts-item {
+	width: 25vw;
+	padding: 2vw !important;
+}
+
+.contacts-item > * {
+	color: #212830;
+}
