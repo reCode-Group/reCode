@@ -259,6 +259,7 @@ svg {
 .quick-start {
 	display: flex;
 	justify-content: space-between;
+	/*background: #f8f8fa;*/
 }
 
 .q-desc {
@@ -496,7 +497,6 @@ svg {
 	height: 10vw;
 
 	background: #fff;
-	color:#005de0;
 
 	padding: 3vw;
 
@@ -616,6 +616,7 @@ svg {
 	background-color: transparent;
 
 	white-space: nowrap;
+	/*line-height: 2;*/
 
 	border:none;
 	outline: 1px solid #005de0;
