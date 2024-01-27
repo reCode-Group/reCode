@@ -17,8 +17,8 @@
 #feedback.show {
 	visibility: visible;
 	opacity: 1;
-	max-height: 800px;
-	margin: 3vw;
+	/*max-height: 800px;*/
+	/*margin: 3vw;*/
 	padding: 4vw;
 
 }
@@ -29,10 +29,43 @@
 }
 
 .contacts-item {
+	display: flex;
 	width: 25vw;
-	padding: 2vw !important;
+	height: auto;
+	padding: 2vw;
+}
+
+.contacts-container {
+	align-items: stretch;
+}
+
+.contacts-item-desc {
+	width: 100%;
+	word-wrap: break-word;
 }
 
 .contacts-item > * {
 	color: #212830;
+}
+
+/* Медиа-запрос для маленьких экранов */
+@media screen and (max-width: 768px) {
+	.contacts {
+		padding: 10vw 0;
+	}
+	.contacts-container {
+		flex-direction: column;
+	}
+	.contacts-item {
+		width: 100% !important;
+		padding: 5vw;
+		margin-bottom: 4vw;
+	}
+	.contacts-item-heading {
+		font-size: 1.2rem;
+	}
+	.contacts-item-desc {
+		margin: 2vw 0;
+	}
+
 }
