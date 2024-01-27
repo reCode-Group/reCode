@@ -1,11 +1,11 @@
 #feedback {
 	display: flex;
+	justify-content: center;
 	flex-direction: column;
 
 	visibility: hidden;
 	opacity: 0;
 	max-height: 0;
-	transform: translateX(180px);
 	overflow: hidden;
 
 	border-radius: 1rem;
@@ -17,10 +17,13 @@
 #feedback.show {
 	visibility: visible;
 	opacity: 1;
-	/*max-height: 800px;*/
-	/*margin: 3vw;*/
+	max-height: 800px;
+	margin: 3vw;
 	padding: 4vw;
+}
 
+.feedback-form {
+	width: 650px;
 }
 
 .contacts {
@@ -67,5 +70,10 @@
 	.contacts-item-desc {
 		margin: 2vw 0;
 	}
-
+	#feedback.show {
+		padding: 8vw;
+	}
+	.feedback-form {
+		width: 100%;
+	}
 }
