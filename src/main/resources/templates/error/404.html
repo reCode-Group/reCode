@@ -7,7 +7,6 @@
     <link rel="icon" th:href="@{/img/r6.ico}">
     <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600,700,800" as="font">
     <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
     <header class="layout-header">
@@ -40,8 +39,11 @@
         </div>
     </header>
 
-    <main style="display: grid" class="layout-main">
-        <object style="margin:4vw; width: 40vw; justify-self: center" data="../img/notfound.svg"></object>
+    <main style="display: flex; flex-direction: column; align-items: center" class="layout-main">
+        <object style="margin:4vw; width: 30vw; " data="../img/notfound.svg"></object>
+        <p style="font-size: 2rem; font-weight: bold;">Ошибка</p>
+        <p style="font-size: 1.5rem; text-align: center">К сожалению, запрашиваемая Вами страница не найдена...<br>Или еще не создана.</p>
+        <a style="margin: 4vw 0" class="button-link" th:href="@{/}">На главную</a>
     </main>
 
     <footer class="layout-footer">
