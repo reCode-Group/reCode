@@ -656,6 +656,9 @@ svg {
 .underline-link {
 	font-weight: 500;
 	text-decoration: underline;
+	word-wrap: break-word;
+	word-wrap:wrap-word;
+	display:inline-block; /* block would also work */
 	cursor: pointer;
 }
 
@@ -681,8 +684,8 @@ svg {
 .arrow-container {
 	height: 100%;
 	position: absolute;
-	bottom: 2vw;
-	right: 2vw;
+	bottom: 3vw;
+	right: 3vw;
 	display: flex;
 	flex-direction: column-reverse;
 	z-index: 999;
@@ -696,7 +699,7 @@ svg {
 	width: 4vw;
 	height: 4vw;
 	border-radius: 50%;
-	bottom: 2vw;
+	bottom: 3vw;
 
 	background: #fff;
 	opacity: .8;
@@ -853,6 +856,26 @@ svg {
 	.header-bottom .button-link {
 		display: none;
 	}
+	/* split-block */
+	.split-block {
+		flex-direction: column;
+	}
+	.split-left {
+		width: 100% !important;
+	}
+	.split-right {
+		border: none;
+		padding: 0;
+		margin: 4vw 0;
+	}
+	.split-block .d-button, .b-button {
+		font-size: 1rem !important;
+		margin-bottom: 2vw;
+	}
+	.split-link, .split-heading {
+		padding: 1vw 0;
+		font-size: 1.2rem;
+	}
 }
 
 /* Медиа-запрос для маленьких экранов */
@@ -955,27 +978,15 @@ svg {
 		margin-bottom: 4vw;
 		margin-right: 4vw;
 	}
-
 	/* split-block */
-	.split-block {
-		flex-direction: column;
+	.split-right {
+		margin: 10vw 0;
 	}
 	.split-link, .split-heading {
 		padding: 1.5vw 0;
 		font-size: 1rem;
 	}
-	.split-left {
-		width: 100% !important;
-	}
-	.split-right {
-		border: none;
-		padding: 0;
-		margin: 10vw 0;
-	}
-	.split-block .d-button, .b-button {
-		font-size: 1rem !important;
-		margin-bottom: 2vw;
-	}
+
 	/* footer */
 	.footer-bottom {
 		flex-wrap: wrap;
