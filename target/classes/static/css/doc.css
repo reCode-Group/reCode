@@ -1,0 +1,39 @@
+body {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.layout-menu {
+    position: sticky;
+    top: 0;
+    left: 0;
+    /*height: 100%;*/
+    width: 20vw;
+
+    padding: 2vw;
+
+    background: #eee;
+}
+
+.nav-container {
+    display: flex;
+    flex-direction: column;
+
+    list-style: none;
+}
+.logo, .nav-container {
+    width: 100%;
+}
+.nav-item {
+    padding: 1vw .3vw !important;
+    border-radius: 1rem;
+}
+
+.nav-item:hover {
+    background: #666666;
+}
+
+.layout-main {
+    height: 100vw;
+}
