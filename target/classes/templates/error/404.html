@@ -7,6 +7,7 @@
     <link rel="icon" th:href="@{/img/r6.ico}">
     <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600,700,800" as="font">
     <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css">
+    <script defer th:src="@{/js/app.js}"></script>
 </head>
 <body>
     <header class="layout-header">
@@ -14,14 +15,49 @@
             <a class="m-l logo" th:href="@{/}">
                 <img style="width: 9rem" src="/img/r7.png" alt="reCode.ru">
             </a>
-            <div class="search">Поиск</div>
-            <div style="margin-left: auto">
+            <div class="search">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.0392 15.6244C18.2714 14.084 19.0082 12.1301 19.0082 10.0041C19.0082 5.03127 14.9769 1 10.0041 1C5.03127 1 1 5.03127 1 10.0041C1 14.9769 5.03127 19.0082 10.0041 19.0082C12.1301 19.0082 14.084 18.2714 15.6244 17.0392L21.2921 22.707C21.6828 23.0977 22.3163 23.0977 22.707 22.707C23.0977 22.3163 23.0977 21.6828 22.707 21.2921L17.0392 15.6244ZM10.0041 17.0173C6.1308 17.0173 2.99087 13.8774 2.99087 10.0041C2.99087 6.1308 6.1308 2.99087 10.0041 2.99087C13.8774 2.99087 17.0173 6.1308 17.0173 10.0041C17.0173 13.8774 13.8774 17.0173 10.0041 17.0173Z" fill="#0F0F0F"/>
+                </svg>
+                Поиск
+            </div>
+            <div class="auth" style="margin-left: auto">
                 <a class="button-link" th:href="@{/registration}">Зарегистрироваться</a>
                 <a class="button-link l-button m-r" th:href="@{/login}">Войти
                     <svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M20,21V3H13a1,1,0,0,1,0-2h8a1,1,0,0,1,1,1V22a1,1,0,0,1-1,1H13a1,1,0,0,1,0-2ZM2,12a1,1,0,0,0,1,1H14.586l-2.293,2.293a1,1,0,1,0,1.414,1.414l4-4a1,1,0,0,0,0-1.414l-4-4a1,1,0,1,0-1.414,1.414L14.586,11H3A1,1,0,0,0,2,12Z"/>
                     </svg>
                 </a>
+            </div>
+            <a class="show-button">
+                <svg width="1.8rem" height="1.8rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <use xlink:href="#show"></use>
+                </svg>
+            </a>
+            <div class="burger-menu">
+                <div class="nav-auth">
+                    <a class="button-link" th:href="@{/registration}">Зарегистрироваться</a>
+                    <a class="button-link l-button" th:href="@{/login}">Войти
+                        <svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20,21V3H13a1,1,0,0,1,0-2h8a1,1,0,0,1,1,1V22a1,1,0,0,1-1,1H13a1,1,0,0,1,0-2ZM2,12a1,1,0,0,0,1,1H14.586l-2.293,2.293a1,1,0,1,0,1.414,1.414l4-4a1,1,0,0,0,0-1.414l-4-4a1,1,0,1,0-1.414,1.414L14.586,11H3A1,1,0,0,0,2,12Z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="search"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.0392 15.6244C18.2714 14.084 19.0082 12.1301 19.0082 10.0041C19.0082 5.03127 14.9769 1 10.0041 1C5.03127 1 1 5.03127 1 10.0041C1 14.9769 5.03127 19.0082 10.0041 19.0082C12.1301 19.0082 14.084 18.2714 15.6244 17.0392L21.2921 22.707C21.6828 23.0977 22.3163 23.0977 22.707 22.707C23.0977 22.3163 23.0977 21.6828 22.707 21.2921L17.0392 15.6244ZM10.0041 17.0173C6.1308 17.0173 2.99087 13.8774 2.99087 10.0041C2.99087 6.1308 6.1308 2.99087 10.0041 2.99087C13.8774 2.99087 17.0173 6.1308 17.0173 10.0041C17.0173 13.8774 13.8774 17.0173 10.0041 17.0173Z" fill="#0F0F0F"/>
+                </svg>
+                    Поиск
+                </div>
+                <nav class="navbar">
+                    <a class="nav-link" href="/#about">О стартапе</a>
+                    <a class="nav-link" th:href="@{/workspace}">Демо-версия</a>
+                    <a class="nav-link" th:href="@{/blank}">Мастерская макросов</a>
+                    <a class="nav-link" href="/#partners">Партнеры</a>
+                    <a class="nav-link" th:href="@{/documentation}">Ресурсы
+                        <svg width="13" height="13" viewBox="0 -3 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.29297 6.70711C3.68349 6.31658 4.31666 6.31658 4.70718 6.70711L12.0001 14L19.293 6.70711C19.6835 6.31658 20.3167 6.31658 20.7072 6.70711L21.4143 7.41421C21.8048 7.80474 21.8048 8.4379 21.4143 8.82843L13.0607 17.182C12.4749 17.7678 11.5252 17.7678 10.9394 17.182L2.58586 8.82843C2.19534 8.4379 2.19534 7.80474 2.58586 7.41422L3.29297 6.70711Z"/></svg>
+                    </a>
+                    <a class="nav-link" th:href="@{/contacts}">Помощь</a>
+                </nav>
             </div>
         </div>
         <div class="header-bottom">
@@ -40,9 +76,10 @@
     </header>
 
     <main style="display: flex; flex-direction: column; align-items: center" class="layout-main">
+        <div class="menu-overlay"></div>
         <object style="margin:4vw; width: 30vw; " data="../img/notfound.svg"></object>
         <p style="font-size: 2rem; font-weight: bold;">Ошибка</p>
-        <p style="font-size: 1.5rem; text-align: center">К сожалению, запрашиваемая Вами страница не найдена...<br>Или еще не создана.</p>
+        <p class="e-desc" style="font-size: 1.5rem; text-align: center">К сожалению, запрашиваемая Вами страница не найдена...<br>Или еще не создана.</p>
         <a style="margin: 4vw 0" class="button-link" th:href="@{/}">На главную</a>
     </main>
 
@@ -121,6 +158,17 @@
             </div>
         </div>
     </footer>
+
+    <svg style="display: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <symbol id="show" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 18L20 18" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+            <path d="M4 12L20 12" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+            <path d="M4 6L20 6" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+        </symbol>
+        <symbol id="hide" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 6L18 18M18 6L6 18" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+    </svg>
 
 </body>
 </html>
