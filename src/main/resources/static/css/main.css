@@ -95,6 +95,7 @@ svg {
 
 .burger-menu {
 	position: absolute;
+	visibility: hidden;
 	display: none;
 	width: 100%;
 	padding: 10vw;
@@ -107,6 +108,8 @@ svg {
 
 .burger-menu.active {
 	display: block;
+	visibility: visible;
+
 }
 
 .burger-menu .nav-link {
@@ -717,7 +720,8 @@ svg {
 
 .menu-overlay {
 	position: fixed;
-	display: none;
+/*	display: none;
+	visibility: hidden;*/
 	top: 0;
 	left: 0;
 	/*display: none;*/

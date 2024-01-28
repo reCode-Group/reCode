@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var overlay = document.querySelector('.menu-overlay');
 
     // Находим все элементы nav-link
-    var navLinks = document.querySelectorAll('.nav-link');
+    var navLinks = document.querySelectorAll('.burger-menu .nav-link');
 
     // Устанавливаем значение, при котором кнопка должна появиться
     var scrollThreshold = 300;
@@ -38,10 +38,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 showButton.querySelector('use').setAttribute('xlink:href', '#show');
                 burgerMenu.classList.remove('active');
                 overlay.style.display = 'none';
+                overlay.style.visibility = 'hidden';
             } else {
                 showButton.querySelector('use').setAttribute('xlink:href', '#hide');
                 burgerMenu.classList.add('active');
                 overlay.style.display = 'block';
+                overlay.style.visibility = 'visible';
             }
         }
     }
@@ -52,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
             showButton.querySelector('use').setAttribute('xlink:href', '#show');
             burgerMenu.classList.remove('active');
             overlay.style.display = 'none';
+            overlay.style.visibility = 'hidden';
         }
     }
 
