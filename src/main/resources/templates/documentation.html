@@ -11,35 +11,259 @@
     <link rel="stylesheet" th:href="@{/css/doc.css}" type="text/css">
 </head>
 <body>
-
-    <menu class="layout-menu">
-        <div class="logo"><img style="width: 8vw" src="/img/r7.png" alt="recode.ru"></div>
-        <ul class="nav-container">
-            <li class="nav-item"><a href="">Пункт 1</a></li>
-            <li class="nav-item"><a href="">Пункт 2</a></li>
-            <li class="nav-item"><a href="">Пункт 3</a></li>
-            <li class="nav-item"><a href="">Пункт 4</a></li>
-            <li class="nav-item"><a href="">Пункт 5</a></li>
-            <li class="nav-item"><a href="">Пункт 6</a></li>
-        </ul>
-    </menu>
+    <header class="layout-menu">
+        <div class="slider-menu">
+            <a class="logo" th:href="@{/}">
+                <img style="width: 8vw; margin-right: .5rem" src="/img/r7.png"  alt="recode.ru">/ Docs
+            </a>
+            <ul class="nav-container">
+                <li class="nav-item"><a href="#services">Все сервисы reCode.ru</a></li>
+                <li class="nav-item"><a href="#engineer">Проектирование</a></li>
+                <li class="nav-item"><a href="#program">Программное обеспечение</a></li>
+                <li class="nav-item"><a href="#workspace">Рабочее пространство</a></li>
+                <li class="nav-item"><a href="#macros">Работа с макросами</a></li>
+                <li class="nav-item"><a href="#office">Офисные пакеты</a></li>
+                <li class="nav-item"><a href="#legal">Правовые документы</a></li>
+            </ul>
+        </div>
+    </header>
 
     <main class="layout-main">
-        <section id="block-1">
+        <div class="search-bar">
+            <a class="logo" th:href="@{/}">
+                <img style="width: 8rem" src="/img/r7.png" alt="reCode.ru">
+            </a>
+            <div class="search">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.0392 15.6244C18.2714 14.084 19.0082 12.1301 19.0082 10.0041C19.0082 5.03127 14.9769 1 10.0041 1C5.03127 1 1 5.03127 1 10.0041C1 14.9769 5.03127 19.0082 10.0041 19.0082C12.1301 19.0082 14.084 18.2714 15.6244 17.0392L21.2921 22.707C21.6828 23.0977 22.3163 23.0977 22.707 22.707C23.0977 22.3163 23.0977 21.6828 22.707 21.2921L17.0392 15.6244ZM10.0041 17.0173C6.1308 17.0173 2.99087 13.8774 2.99087 10.0041C2.99087 6.1308 6.1308 2.99087 10.0041 2.99087C13.8774 2.99087 17.0173 6.1308 17.0173 10.0041C17.0173 13.8774 13.8774 17.0173 10.0041 17.0173Z" fill="#0F0F0F"/>
+                </svg>
+                Поиск по документации
+            </div>
+            <a class="button-link d-button m-r" th:href="@{/workspace}">Начать работу</a>
+        </div>
 
+        <section id="services" class="document-block">
+            <span class="section-heading">Все сервисы reCode.ru</span>
+            <div class="document-container">
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Описание технической поддержки</span>
+                    <p class="d-desc">Порядок работы технический поддержки с обращениями</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Обзор Мастерской макросов</span>
+                    <p class="d-desc">Цифровая витрина макросов и скриптов наших клиентов</p>
+                </div>
+            </div>
         </section>
-        <section id="block-2">
 
+        <section id="engineer" class="document-block">
+            <span class="section-heading">Проектирование</span>
+            <div class="document-container">
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Анализ сферы макросов</span>
+                    <p class="d-desc">Системный анализ предметной области разработки ПО</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Планирование тестирования</span>
+                    <p class="d-desc">Разработка плана тестирования и тестовых случаев</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Оценка зрелости ИТ-процессов</span>
+                    <p class="d-desc">Оценка зрелости процессов управления ИТ и выбор технологии разработки ПО</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Разработка спецификации требований</span>
+                    <p class="d-desc">Создание спецификации требований: от концепции до конкретики</p>
+                </div>
+            </div>
         </section>
-        <section id="block-3">
 
+        <section id="program" class="document-block">
+            <span class="section-heading">Программное обеспечние</span>
+            <div class="document-container">
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Облачный конвертер</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Десктопное приложение</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+            </div>
         </section>
 
-        <div class="footer-wrapper m-l m-r">
+        <section style="display: none" id="workspace" class="document-block">
+            <span class="section-heading">Рабочее пространство</span>
+            <div class="document-container">
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+            </div>
+        </section>
+
+        <section style="display: none" id="macros" class="document-block">
+            <span class="section-heading">Работа с макросами</span>
+            <div class="document-container">
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+            </div>
+        </section>
+
+        <section style="display: none" id="office" class="document-block">
+            <span class="section-heading">Отечественные офисные пакеты</span>
+            <div class="document-container">
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+            </div>
+        </section>
+
+        <section style="display: none" id="legal" class="document-block">
+            <span class="section-heading">Правовые документы</span>
+            <div class="document-container">
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+                <div class="doc-item">
+                    <svg class="doc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <use xlink:href="#d-icon"></use>
+                    </svg>
+                    <span class="d-heading">Конвертер макросов</span>
+                    <p class="d-desc">Переводчик устаревших макросов и скриптов на новые языки программирования</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="footer-wrapper m-l-d m-r">
             <div class="footer-bottom">
                 <div class="footer-left">
                     <ul class="footer-links">
-                        <li class="footer-link"><a href="#team">О команде</a></li>
+                        <li class="footer-link"><a href="/#team">О команде</a></li>
                         <li class="footer-link"><a th:href="@{/documentation}">Юридические документы</a></li>
                         <li class="footer-link"><a th:href="@{/contacts}">Контакты</a></li>
                         <li class="footer-link"><a href="https://t.me/recode_official">Блог</a></li>
@@ -69,7 +293,11 @@
         </div>
     </main>
 
-
+    <svg style="display: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <symbol id="d-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.29289 1.29289C9.48043 1.10536 9.73478 1 10 1H18C19.6569 1 21 2.34315 21 4V20C21 21.6569 19.6569 23 18 23H6C4.34315 23 3 21.6569 3 20V8C3 7.73478 3.10536 7.48043 3.29289 7.29289L9.29289 1.29289ZM18 3H11V8C11 8.55228 10.5523 9 10 9H5V20C5 20.5523 5.44772 21 6 21H18C18.5523 21 19 20.5523 19 20V4C19 3.44772 18.5523 3 18 3ZM6.41421 7H9V4.41421L6.41421 7ZM7 13C7 12.4477 7.44772 12 8 12H16C16.5523 12 17 12.4477 17 13C17 13.5523 16.5523 14 16 14H8C7.44772 14 7 13.5523 7 13ZM7 17C7 16.4477 7.44772 16 8 16H16C16.5523 16 17 16.4477 17 17C17 17.5523 16.5523 18 16 18H8C7.44772 18 7 17.5523 7 17Z"/>
+        </symbol>
+    </svg>
 
 </body>
 </html>

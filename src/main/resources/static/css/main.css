@@ -61,10 +61,15 @@ svg {
 .logo {
 	display: flex;
 	align-items: center;
+	font-weight: 600;
+	font-size: 1.5rem;
+
+	color: #666666;
+
 }
 
 .search {
-	border-radius: 1rem;
+	border-radius: 2rem;
 	background: var(--gray-bg);
 	color: #373e45;
 
@@ -890,9 +895,12 @@ svg {
 	.header-top {
 		padding: 5vw 0;
 	}
-	.search { display: none; }
+	.header-top .search { display: none; }
 	.header-top .show-button {
 		display: flex;
+	}
+	.auth, .burger-menu .nav-auth {
+		margin-bottom: 5vw;
 	}
 	/* hero */
 	.hero {
@@ -1030,6 +1038,14 @@ svg {
 
 	.m-r {
 		margin-right: 5vw;
+	}
+	/*	404, 500 pages */
+	main object {
+		width: 90% !important;
+	}
+	.e-desc {
+		width: 80%;
+		font-size: 1rem !important;
 	}
 }
 
