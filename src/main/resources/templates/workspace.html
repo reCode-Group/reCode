@@ -83,28 +83,31 @@
     </header>
 
     <main class="layout-main">
-        <span class="demo-heading">Демо-версия переводчика VBA макроса в JavaScript</span>
-        <div class="converter-container">
-            <div class="converter-left">
-                <div class="import-script">
-                    <div class="drag-n-drop"><span>Перетащите или кликните чтобы открыть файл ...</span></div>
-                    <button class="open-file button-link l-button"><i class="bi bi-folder2-open"></i> Открыть</button>
+        <div class="menu-overlay"></div>
+        <div class="demo m-r m-l">
+            <span class="section-heading">Демо-версия переводчика VBA макроса в JavaScript</span>
+            <div class="converter-container">
+                <div class="converter-left">
+                    <div class="import-block">
+                        <div class="drag-n-drop"><span>Перетащите или кликните чтобы открыть файл ...</span></div>
+                        <button class="open-file button-link l-button"><i class="bi bi-folder2-open"></i>Открыть</button>
+                    </div>
+                    <div id="from" class="editor"></div>
                 </div>
-                <div id="from" class="editor"></div>
-            </div>
-            <div class="converter-right">
-                <div class="export-script">
-                    <button class="copy-btn button-link l-button" onclick="copyFunction()"><i class="bi bi-copy"></i>
-                        Копировать
-                    </button>
+                <div class="converter-right">
+                    <div class="export-block" style="justify-content: flex-end">
+                        <button class="copy-btn button-link l-button" onclick="copyFunction()"><i class="bi bi-copy"></i>
+                            Копировать
+                        </button>
+                    </div>
+                    <div id="to" class="editor"></div>
                 </div>
-                <div id="to" class="editor"></div>
             </div>
+            <button class="convert-button" onclick="sendData()">Преобразовать</button>
         </div>
-        <button class="convert-button" onclick="sendData()">Преобразовать</button>
     </main>
 
-    <footer class="layout-footer">
+    <footer class="layout-footer" style="padding: 1vw 0">
         <div class="footer-wrapper m-l m-r">
             <div class="footer-bottom">
                 <div class="footer-left">
@@ -146,7 +149,7 @@
             <path d="M4 6L20 6" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
         </symbol>
         <symbol id="hide" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 4L20 20M20 4L4 20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L18 18M18 6L6 18" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </symbol>
     </svg>
 
@@ -158,13 +161,17 @@
 
 
     <script>
-        var fromEditor = CodeMirror(document.querySelector('.converter-left .editor'), {
-          value: "Вставьте код макроса на VBA сюда\n",
-          mode: "vb",
+        var fromEditorElement = document.querySelector('.converter-left .editor');
+        var toEditorElement = document.querySelector('.converter-right .editor');
+
+        var fromEditor = CodeMirror(fromEditorElement, {
+            value: "Вставьте код макроса на VBA сюда\n",
+            mode: "vb",
             lineNumbers: true,
         });
-        var toEditor = CodeMirror(document.querySelector('.converter-right .editor'), {
-          mode: "javascript",
+
+        var toEditor = CodeMirror(toEditorElement, {
+            mode: "javascript",
             lineNumbers: true,
         });
     </script>
