@@ -853,6 +853,9 @@ svg {
 	.f-heading, .h-sub-heading {
 		font-size: 1.5rem;
 	}
+	.header-bottom, .header-top {
+		padding: 1.5vw 0;
+	}
 	.header-bottom .button-link {
 		display: none;
 	}
