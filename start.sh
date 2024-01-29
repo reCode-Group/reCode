@@ -16,6 +16,6 @@ docker stop my
 
 #docker-compose up --build -d
 docker build -t my .
-docker run -d -p 8080:3030 my
+docker run -d -p 3030:8080 my
 
 
