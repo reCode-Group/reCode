@@ -9,12 +9,13 @@ mvn package
 
 # Ensure, that docker-compose stopped
 docker-compose stop
+docker stop my
 
 # Start new deployment
 
 
 #docker-compose up --build -d
 docker build -t my .
-docker run -d -p 8080:8080 my
+docker run -d -p 8080:3030 my
 
 
