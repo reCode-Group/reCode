@@ -9,7 +9,7 @@ mvn package
 
 # Ensure, that docker-compose stopped
 docker-compose stop
-docker stop my
+docker-compose rm
 
 # Start new deployment
 
