@@ -8,8 +8,8 @@ mvn clean
 mvn package
 
 # Ensure, that docker-compose stopped
-docker-compose stop
-docker-compose rm
+docker stop my
+docker rm my
 
 # Start new deployment
 
