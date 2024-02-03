@@ -4,9 +4,11 @@ import java.util.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
-
+import org.intellij.lang.annotations.Pattern
 
 class Vba2JsConverter {
+
+
     fun vbaToJs(input: String): String = runBlocking {
         val pattern = "(?i)sub.*?end sub".toRegex(RegexOption.DOT_MATCHES_ALL)
         val functions = pattern.findAll(input).map { it.value }.toList()
@@ -58,18 +60,20 @@ class Vba2JsConverter {
         // Remove END FUNCTION tags
         a = a.dropLast(1).toTypedArray().toMutableList()
 
+        var withArray = mutableListOf<String>()
         // Fix Syntax
         for (i in 1..<a.size) {
             // Vars
-            if (Regex("^dim\\s+", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
+
+            if (matchesIC(a[i], "^dim\\s+")) {
                 a[i] = a[i].replace("dim\\s*".toRegex(RegexOption.IGNORE_CASE), "")
                 vars += "${a[i]},"
                 a[i] = ""
-            } else if (Regex("^msgbox\\(").containsMatchIn(a[i])) {
+            } else if (matchesIC(a[i], "^msgbox\\(")) {
                 a[i] = a[i].replace("^msgbox\\(".toRegex(RegexOption.IGNORE_CASE), "alert(")
-            } else if (Regex("(^msgbox\\s)+(.*)").containsMatchIn(a[i])) {
+            } else if (matchesIC(a[i], "(^msgbox\\s)+(.*)")) {
                 a[i] = a[i].replace("(^msgbox\\s)+(.*)".toRegex(RegexOption.IGNORE_CASE), "alert($2)")
-            } else if (Regex("^inputbox\\(").containsMatchIn(a[i])) {
+            } else if (matchesIC(a[i], "^inputbox\\(")) {
                 a[i] = a[i].replace("^inputbox\\(".toRegex(RegexOption.IGNORE_CASE), "prompt(")
             } else if (Regex("(^inputbox\\s)+(.*)").containsMatchIn(a[i])) {
                 a[i] = a[i].replace("(^inputbox\\s)+(.*)".toRegex(RegexOption.IGNORE_CASE), "prompt($2)")
@@ -92,17 +96,18 @@ class Vba2JsConverter {
                     });"
 
             } else if (Regex(
-                    "\\bcells\\([0-9]+\\s*,\\s*[0-9]+\\s*\\)\\s*=",
+                    "\\bCELLS\\([0-9]+\\s*,\\s*[0-9]+\\s*\\)\\s*=",
                     RegexOption.IGNORE_CASE
                 ).containsMatchIn(a[i])
             ) {
 //             Cells(3, 4)="Hello world" --->>> Api.GetActiveSheet().GetRange("C4").SetValue("Hello world");
                 val (cInt, r) = Regex(
-                    "\\bcells\\(([0-9]+)\\s*,\\s*([0-9]+)\\s*\\)",
+                    "\\bCELLS\\(([0-9]+)\\s*,\\s*([0-9]+)\\s*\\)",
                     RegexOption.IGNORE_CASE
                 ).findAll(a[i])
                     .map { Pair(it.groupValues[1].toInt(), it.groupValues[2].toInt()) }.toList()[0]
-                a[i] = "Api.GetActiveSheet().GetRange(${addHideString("\"${convertToAlphabet(cInt)}$r\"")}).SetValue(\"Hello world\")"
+                a[i] =
+                    "Api.GetActiveSheet().GetRange(${addHideString("\"${convertToAlphabet(cInt)}$r\"")}).SetValue(\"Hello world\")"
             } else if (Regex("(?<![a-zA-Z])ActiveSheet.*", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = a[i].replace("ActiveSheet".toRegex(RegexOption.IGNORE_CASE), "Api.GetActiveSheet()")
             } else if (Regex("'nothing'").containsMatchIn(a[i])) {
@@ -120,13 +125,13 @@ class Vba2JsConverter {
                 a[i] = "}"
             } else if (Regex("\\bEXIT\\b\\s*\\bFOR\\b").containsMatchIn(a[i])) {
                 a[i] = "break"
-            } else if (Regex("^\\bIF\\b\\s+").containsMatchIn(a[i])) {
+            } else if (Regex("^\\bIF\\b\\s+", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = a[i].replace("^\\bIF\\b\\s+".toRegex(RegexOption.IGNORE_CASE), "")
                 a[i] = a[i].replace("\\bTHEN$\\b".toRegex(RegexOption.IGNORE_CASE), "")
                 a[i] = a[i].replace("=".toRegex(), "==").replace("<>".toRegex(), "!=")
                 a[i] = a[i].replace("\\bOR\\b".toRegex(RegexOption.IGNORE_CASE), "||")
                     .replace("\\bAND\\b".toRegex(RegexOption.IGNORE_CASE), "&&")
-                a[i] = "if ($a[i]){"
+                a[i] = "if (${a[i]}){"
             } else if (Regex("^ELSE\\b").containsMatchIn(a[i])) {
                 a[i] = "}else{"
                 a[i] = a[i].replace("=".toRegex(), "==").replace("<>".toRegex(), "!=")
@@ -137,7 +142,7 @@ class Vba2JsConverter {
                 a[i] = a[i].replace("=".toRegex(), "==").replace("<>".toRegex(), "!=")
                 a[i] = a[i].replace("\\bOR\\b".toRegex(RegexOption.IGNORE_CASE), "||")
                     .replace("\\bAND\\b".toRegex(RegexOption.IGNORE_CASE), "&&")
-            } else if (Regex("^END\\s*IF").containsMatchIn(a[i])) {
+            } else if (Regex("^END\\s*IF", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = "}"
             } else if (Regex("^WHILE\\s").containsMatchIn(a[i])) {
                 a[i] = a[i].replace("^WHILE(.+)".toRegex(RegexOption.IGNORE_CASE), "while($1){")
@@ -185,6 +190,10 @@ class Vba2JsConverter {
                 a[i] = a[i].replace("^CONST".toRegex(), "const")
             } else if (Regex("^Option\\s+Explicit.*[\\r\\n]").containsMatchIn(a[i])) {
                 a[i] = a[i].replace("^Option\\s+Explicit.*[\\r\\n]".toRegex(RegexOption.IGNORE_CASE), "")
+            } else if (Regex("^END\\s*WITH", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
+                a[i] = ""
+                if (withArray.isNotEmpty())
+                    withArray.removeLast()
             } else {
                 // alert(a[i])
             }
@@ -195,6 +204,15 @@ class Vba2JsConverter {
                 a[i] = Regex(".*GetRange\\([^)]+\\)", RegexOption.IGNORE_CASE).replace(a[i]) {
                     it.value + ".Value"
                 }
+
+            if (Regex("\\s+[.]\\w+", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
+                a[i] = a[i].replace("\\s[.]".toRegex(RegexOption.IGNORE_CASE), " ${withArray.last()}.")
+            } else if (Regex("^\\bWITH\\b\\s+", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
+                withArray.add(
+                    Regex("^\\bWITH\\s+(.*)", (RegexOption.IGNORE_CASE)).find(a[i])!!.groupValues.last()
+                )
+                a[i] = ""
+            }
         }
 
         // other stuff
@@ -229,7 +247,7 @@ class Vba2JsConverter {
         //добавление break в конструкции switch-case
         var i = 1
         while (i < a.size) {
-            if (a[i].matches(Regex(".*case\\s.*", RegexOption.IGNORE_CASE)) && a[i - 1].matches(Regex("[^{]+\$"))) {
+            if (a[i].matches(Regex(".*CASE\\s.*", RegexOption.IGNORE_CASE)) && a[i - 1].matches(Regex("[^{]+\$"))) {
                 a.add(i, "break;")
                 i++
             }
@@ -250,12 +268,23 @@ class Vba2JsConverter {
 
         var ss = "$fxHead\n$vars\n${a.joinToString("\n")}\n})();"
 
-//    ss = ss.replace(Regex("$fx\\s*=\\s*", RegexOption.IGNORE_CASE), "return ")
-
         ss = unHideStrings(ss)
 
         return jsIndenter(ss)
     }
+
+    /**
+     * Выполняет проверку на совпадение с игнорированием регистра.
+     *
+     * Эта функция принимает два аргумента [string] - строку, в которой происходит поиск совпадения и [pattern] - регулярное выражение.
+     * Пример использования:
+     *
+     * @param string строка, в которой происходит поиск совпадения .
+     * @param pattern регулярное выражение.
+     * @return Возвращает true, если совпадение найдено, иначе false.
+     */
+    private fun matchesIC(string: String, pattern: String): Boolean =
+        Regex(pattern, RegexOption.IGNORE_CASE).containsMatchIn(string)
 
     private fun jsIndenter(js: String): String {
         var a = js.split("\n", "\tvar").toMutableList()
