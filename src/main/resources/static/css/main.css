@@ -96,6 +96,7 @@ svg {
 .burger-menu {
 	position: absolute;
 	visibility: hidden;
+	overflow-y: visible;
 	display: none;
 	width: 100%;
 	padding: 10vw;
@@ -333,6 +334,17 @@ svg {
 }
 
 .features-item:hover .arrow-right {
+	color: var(--accent-color);
+	right: 1vw;
+	opacity: 1;
+}
+
+.doc-item .arrow-right {
+	bottom: 1vw;
+	right: 1.5vw;
+}
+
+.doc-item:hover .arrow-right {
 	color: var(--accent-color);
 	right: 1vw;
 	opacity: 1;
@@ -688,6 +700,7 @@ svg {
 	background: no-repeat url("../img/arrow-right.svg");
 	background-size:cover;
 	transition: opacity .3s ease-in-out, right .2s ease-in-out;
+	z-index: 1000;
 }
 
 .arrow-container {
