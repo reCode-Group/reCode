@@ -11,10 +11,14 @@ mvn package
 docker stop my
 docker rm my
 
+# docker rmi $(sudo docker images -q) -f   #удаление всех образов
+
 # Start new deployment
-
-
 #docker-compose up --build -d
+
+
+
+
 docker build -t my .
 docker run -d -p 3030:8080 my
 
