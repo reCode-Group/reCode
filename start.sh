@@ -8,18 +8,13 @@ mvn clean
 mvn package
 
 # Ensure, that docker-compose stopped
-docker stop my
-docker rm my
-
+docker stop reCodeApp
 # docker rmi $(sudo docker images -q) -f   #удаление всех образов
-
 # Start new deployment
 #docker-compose up --build -d
 
 
-
-
-docker build -t my .
-docker run -d -p 443:443 my
+docker build -t reCodeApp .
+docker run -d -p 443:443 reCodeApp
 
 
