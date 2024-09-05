@@ -20,6 +20,6 @@ docker rm my
 
 
 docker build -t my .
-docker run -d -p 3030:443 my
+docker run -d -p 443:443 my
 
 
