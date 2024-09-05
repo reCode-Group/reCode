@@ -1,5 +1,6 @@
 #!/bin/bash
 
 # Ensure, that docker-compose stopped
-docker stop my
-docker rm my
+docker stop reCodeApp
+
+# Ensure, that the old application won't be deployed again.
