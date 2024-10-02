@@ -165,9 +165,10 @@
         var toEditorElement = document.querySelector('.converter-right .editor');
 
         var fromEditor = CodeMirror(fromEditorElement, {
-            value: "Вставьте код макроса на VBA сюда\n",
+            value: "",
             mode: "vb",
             lineNumbers: true,
+
         });
 
         var toEditor = CodeMirror(toEditorElement, {

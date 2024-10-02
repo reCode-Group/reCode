@@ -1,14 +1,32 @@
 package com.dev.reCode
 
-import java.util.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
-import org.intellij.lang.annotations.Pattern
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.util.*
 
 class Vba2JsConverter {
 
 
+    fun formatJSWithPrettier(code: String): String {
+        // Запускаем процесс с prettier
+        val process = ProcessBuilder("prettier.cmd", "--parser", "babel")
+            .redirectErrorStream(true)
+            .start()
+
+        // Отправляем код на stdin процесса
+        process.outputStream.bufferedWriter().use { it.write(code) }
+
+        // Читаем форматированный результат с stdout
+        val reader = BufferedReader(InputStreamReader(process.inputStream))
+        val formattedCode = reader.readText()
+
+        process.waitFor()
+
+        return formattedCode
+    }
     fun vbaToJs(input: String): String = runBlocking {
         val pattern = "(?i)sub.*?end sub".toRegex(RegexOption.DOT_MATCHES_ALL)
         val functions = pattern.findAll(input).map { it.value }.toList()
@@ -16,7 +34,8 @@ class Vba2JsConverter {
             async { thProcess(item) }
         }
         val results = deferredResults.awaitAll()
-        return@runBlocking results.joinToString(separator = "\n")
+        return@runBlocking formatJSWithPrettier(results.joinToString(separator = "\n"))
+//        return@runBlocking results.joinToString(separator = "\n")
     }
 
 
@@ -31,10 +50,9 @@ class Vba2JsConverter {
 
         s = hideStrings(s)
 
-
         s = s.replace("&".toRegex(), "+")
         s = s.replace("_\n".toRegex(), "")
-        s = s.replace(":".toRegex(), "\n")
+        s = s.replace(":[^=]".toRegex(), "\n")
         s = s.replace("\\bthen\\b[ \\t](.+)".toRegex(), "then\n$1\nEnd If")
 
         // split block into separate lines
@@ -85,29 +103,54 @@ class Vba2JsConverter {
                 a[i] = a[i].replace("\\bcall\\s".toRegex(RegexOption.IGNORE_CASE), "")
             } else if (Regex("\\sSET\\s+").containsMatchIn(a[i])) {
                 a[i] = a[i].replace("\\sSET\\s+".toRegex(RegexOption.IGNORE_CASE), "")
-            } else if (Regex(
-                    "^Range(.*)\\.Interior\\.Color.*=.*RGB(.*)\\s",
-                    RegexOption.IGNORE_CASE
-                ).containsMatchIn(a[i])
-            ) {
-                a[i] =
-                    "Api.GetActiveSheet().GetRange${Regex("Range(.*).Interior").find(a[i])!!.groupValues[1]}.SetFillColor(Api.CreateColorFromRGB${
-                        Regex("RGB(.*)").find(a[i])!!.groupValues[1]
-                    });"
+            }
+            else if (Regex(".*Interior\\.Color.*=.*RGB(.*)\\s", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
+            {
+                a[i] = a[i].replace("Interior\\.Color.*=.*RGB(.*)".toRegex(RegexOption.IGNORE_CASE), "SetFillColor(Api.CreateColorFromRGB${Regex("RGB(.*)").find(a[i])!!.groupValues[1]});" )
+            }
+            else if (Regex(".*Font\\.Color.*=.*RGB(.*)\\s", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
+            {
+                a[i] = a[i].replace("Font\\.Color.*=.*RGB(.*)".toRegex(RegexOption.IGNORE_CASE), "SetFontColor(Api.CreateColorFromRGB${Regex("RGB(.*)").find(a[i])!!.groupValues[1]});" )
+            }
 
-            } else if (Regex(
+            else if (Regex(".*Font\\.Bold.*=.*\\s", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
+            {
+                a[i] = a[i].replace("Font\\.Bold.*=(.*)".toRegex(RegexOption.IGNORE_CASE), "SetBold(${Regex("Font\\.Bold.*=(.*)").find(a[i])!!.groupValues[1].toLowerCase()})" )
+            }
+
+            else if (Regex(".*\\.Merge", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
+            {
+                a[i] = a[i] + "(true)"
+            }
+            else if (Regex(".*\\.UnMerge", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
+            {
+                a[i] = a[i] + "()"
+            }
+            else if (Regex("^Columns\\(", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
+            {
+                var d = strs[Regex("Columns\\(\u0007(.*)\u0007\\)", RegexOption.IGNORE_CASE).find(a[i])!!.groupValues[1].toInt()]
+                d = d.substring(1, d.length-1) // убираем кавычки
+                a[i] = "Api.GetActiveSheet().SetColumnWidth(${convertFromAlphabet(d)}, ${Regex("=\\s*(.*)").find(a[i])!!.groupValues[1]})"
+            }
+
+            else if (Regex("\\bSelection\\.TypeText\\s*Text\\s*:=\\s*(.*)", RegexOption.IGNORE_CASE).containsMatchIn(a[i])){
+                a[i] = "var oDocument = Api.GetDocument();\n" +
+                        "var oParagraph = Api.CreateParagraph();\n" +
+                        "oParagraph.AddText(${Regex(":=\\s*(.*)").find(a[i])!!.groupValues[1]});\n" +
+                        "oDocument.InsertContent([oParagraph]);"
+            }
+            else if (Regex(
                     "\\bCELLS\\([0-9]+\\s*,\\s*[0-9]+\\s*\\)\\s*=",
                     RegexOption.IGNORE_CASE
                 ).containsMatchIn(a[i])
             ) {
-//             Cells(3, 4)="Hello world" --->>> Api.GetActiveSheet().GetRange("C4").SetValue("Hello world");
                 val (cInt, r) = Regex(
                     "\\bCELLS\\(([0-9]+)\\s*,\\s*([0-9]+)\\s*\\)",
                     RegexOption.IGNORE_CASE
-                ).findAll(a[i])
-                    .map { Pair(it.groupValues[1].toInt(), it.groupValues[2].toInt()) }.toList()[0]
+                ).findAll(a[i]).map { Pair(it.groupValues[1].toInt(), it.groupValues[2].toInt()) }.toList()[0]
                 a[i] =
-                    "Api.GetActiveSheet().GetRange(${addHideString("\"${convertToAlphabet(cInt)}$r\"")}).SetValue(\"Hello world\")"
+                    "Api.GetActiveSheet().GetRange(${addHideString("\"${convertToAlphabet(cInt)}$r\"")}).SetValue(${Regex("=\\s*(.*)").find(a[i])!!.groupValues[1]})"
+
             } else if (Regex("(?<![a-zA-Z])ActiveSheet.*", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = a[i].replace("ActiveSheet".toRegex(RegexOption.IGNORE_CASE), "Api.GetActiveSheet()")
             } else if (Regex("'nothing'").containsMatchIn(a[i])) {
@@ -159,7 +202,7 @@ class Vba2JsConverter {
             } else if (Regex("\\sSTEP\\s").containsMatchIn(a[i])) {
                 a[i] = a[i].replace("\\sSTEP\\s".toRegex(), "+")
             } else if (Regex("^SELECT\\s+CASE(.+$)", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
-                a[i] = a[i].replace("^SELECT\\s+CASE(.+$)".toRegex(RegexOption.IGNORE_CASE), "switch($1){")
+                a[i] = a[i].replace("^SELECT\\s+CASE\\s+(.+?)\\s*\$".toRegex(RegexOption.IGNORE_CASE), "switch($1){")
             } else if (Regex("^END\\s+SELECT", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = "}"
             } else if (Regex("^CASE\\s+ELSE", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
@@ -198,9 +241,13 @@ class Vba2JsConverter {
                 // alert(a[i])
             }
 
-            if (Regex("(?<![a-zA-Z])range.*", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
+            if (Regex("range.*", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
                 a[i] = a[i].replace("range".toRegex(RegexOption.IGNORE_CASE), "GetRange")
-            if (Regex(".*GetRange\\([^)]+\\)\\s*=\\s*", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
+            if (Regex("GetRange.*", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
+                a[i] = a[i].replace(".*GetRange".toRegex(RegexOption.IGNORE_CASE), "Api.GetActiveSheet().GetRange")
+
+            //Для getrange в тексте
+            if (Regex(".+GetRange\\([^)]+\\)\\s*=\\s*", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
                 a[i] = Regex(".*GetRange\\([^)]+\\)", RegexOption.IGNORE_CASE).replace(a[i]) {
                     it.value + ".Value"
                 }
@@ -375,7 +422,18 @@ class Vba2JsConverter {
         newText = newText.replace("\"\"", "\\\"")
         return newText
     }
+    private fun convertFromAlphabet(s: String): Int {
+        var result = 0
+        var multiplier = 1
 
+        // Идем с конца строки к началу
+        for (i in s.length - 1 downTo 0) {
+            val value = s[i].uppercaseChar().code - 'A'.code + 1
+            result += value * multiplier
+            multiplier *= 26
+        }
+        return result -1
+    }
 
     private fun convertToAlphabet(n: Int): String {
         var result = ""
