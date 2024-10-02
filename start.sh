@@ -15,6 +15,6 @@ docker stop recode-app
 
 
 docker build -t recode-app .
-docker run -d 443:443 -t recode-app
+docker run -d -p 443:443 -t recode-app
 
 
