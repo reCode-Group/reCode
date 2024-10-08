@@ -11,20 +11,15 @@ class Vba2JsConverter {
 
 
     fun formatJSWithPrettier(code: String): String {
-        // Запускаем процесс с prettier
         val process = ProcessBuilder("prettier.cmd", "--parser", "babel")
             .redirectErrorStream(true)
             .start()
 
-        // Отправляем код на stdin процесса
         process.outputStream.bufferedWriter().use { it.write(code) }
 
-        // Читаем форматированный результат с stdout
         val reader = BufferedReader(InputStreamReader(process.inputStream))
         val formattedCode = reader.readText()
-
         process.waitFor()
-
         return formattedCode
     }
     fun vbaToJs(input: String): String = runBlocking {
