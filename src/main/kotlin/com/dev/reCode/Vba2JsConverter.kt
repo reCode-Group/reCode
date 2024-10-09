@@ -10,7 +10,7 @@ import java.util.*
 class Vba2JsConverter {
 
     fun formatJSWithPrettier(code: String): String {
-        val process = ProcessBuilder("prettier.cmd", "--parser", "babel")
+        val process = ProcessBuilder(if (System.getProperty("os.name").toLowerCase()=="win")  "prettier.cmd" else "prettier", "--parser", "babel")
             .redirectErrorStream(true)
             .start()
 
