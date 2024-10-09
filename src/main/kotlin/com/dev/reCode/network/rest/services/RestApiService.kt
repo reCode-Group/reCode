@@ -17,7 +17,9 @@ class RestApiService {
                 status = CODE_SUCCESS
             )
         } catch (e: Exception) {
-            ConverterResponse(status = CODE_ERROR)
+            ConverterResponse(
+                data = e.message,
+                status = CODE_ERROR)
         }
     }
 

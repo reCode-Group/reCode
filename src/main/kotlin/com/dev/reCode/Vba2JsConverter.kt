@@ -9,7 +9,6 @@ import java.util.*
 
 class Vba2JsConverter {
 
-
     fun formatJSWithPrettier(code: String): String {
         val process = ProcessBuilder("prettier.cmd", "--parser", "babel")
             .redirectErrorStream(true)
@@ -165,7 +164,7 @@ class Vba2JsConverter {
                 a[i] = "break"
             } else if (Regex("^\\bIF\\b\\s+", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = a[i].replace("^\\bIF\\b\\s+".toRegex(RegexOption.IGNORE_CASE), "")
-                a[i] = a[i].replace("\\bTHEN$\\b".toRegex(RegexOption.IGNORE_CASE), "")
+                a[i] = a[i].replace("\\bTHEN\\b".toRegex(RegexOption.IGNORE_CASE), "")
                 a[i] = a[i].replace("=".toRegex(), "==").replace("<>".toRegex(), "!=")
                 a[i] = a[i].replace("\\bOR\\b".toRegex(RegexOption.IGNORE_CASE), "||")
                     .replace("\\bAND\\b".toRegex(RegexOption.IGNORE_CASE), "&&")
