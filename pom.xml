@@ -126,7 +126,6 @@
                             <sourceDirs>
                                 <source>src/main/java</source>
                                 <source>src/main/kotlin</source>
-                                <source>src/main/resources</source>
                             </sourceDirs>
                         </configuration>
                     </execution>
@@ -140,7 +139,6 @@
                             <sourceDirs>
                                 <source>src/test/java</source>
                                 <source>src/test/kotlin</source>
-                                <source>src/test/resources</source>
                             </sourceDirs>
                         </configuration>
                     </execution>

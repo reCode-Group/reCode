@@ -7,11 +7,12 @@ services:
       JAVA_OPTS: '-Xmx512m'
     restart: always
     ports:
-      - "443:8080"
+      - "443:443"
     depends_on:
       - postgres
     networks:
       - spring-postgres
+
   postgres:
     image: postgres:13.16-bookworm
     environment:
