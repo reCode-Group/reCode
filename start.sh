@@ -13,6 +13,7 @@ docker rmi $(sudo docker images -q) -f   #удаление всех образо
 # Start new deployment
 #docker-compose up --build -d
 
+docker-compose
 
 docker build -t recode-app .
 docker run -d -p 443:443 -t recode-app

@@ -17,7 +17,7 @@
 		<p class="attention">Еще нет аккаунта?
 			<a style="margin-left: 10px;" class="reg-link" th:href="@{/registration}">Зарегистрироваться</a>
 		</p>
-		<form class="form">
+		<form class="form" method="post" th:action="@{/perform-login}">
 			<label for="email" class="l-label">E-mail</label>
 			<input id="email" class="text-input" required="" name="email" value="" type="text" autofocus="" autocomplete="off" placeholder="example@test.ru">
 			<label for="password" class="l-label">Пароль</label>

@@ -28,8 +28,8 @@ class Vba2JsConverter {
             async { thProcess(item) }
         }
         val results = deferredResults.awaitAll()
-        return@runBlocking formatJSWithPrettier(results.joinToString(separator = "\n"))
-//        return@runBlocking results.joinToString(separator = "\n")
+//        return@runBlocking formatJSWithPrettier(results.joinToString(separator = "\n"))
+        return@runBlocking results.joinToString(separator = "\n")
     }
 
 
@@ -157,7 +157,7 @@ class Vba2JsConverter {
                     .replace("\\bTO\\b".toRegex(RegexOption.IGNORE_CASE), "")
                 val to = Regex("\\s*[\\w()]+\\s*").find(a[i])!!.value
                     .replace("=", "").replace("\\s+".toRegex(), "")
-                a[i] = "for ($counter=$from; $counter<=$to; $counter++){"
+                a[i] = "for($counter = $from; $counter <= $to; $counter++){"
             } else if (Regex("^NEXT\\b", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = "}"
             } else if (Regex("\\bEXIT\\b\\s*\\bFOR\\b").containsMatchIn(a[i])) {
