@@ -11,11 +11,12 @@
 
 FROM maven:3.8.6-eclipse-temurin-17 AS builder
 WORKDIR /tmp
-COPY . .
-RUN mvn clean package -DskipTests
+COPY mvnw pom.xml ./
+COPY ./src ./src
+RUN mvn clean install -DskipTests
 
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /tmp
 EXPOSE 443
-COPY --from=builder target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+COPY --from=builder /tmp/target/*.jar /tmp/*.jar
+ENTRYPOINT ["java","-jar","/tmp/*.jar"]
