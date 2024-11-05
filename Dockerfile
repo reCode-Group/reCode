@@ -17,5 +17,5 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /tmp
 EXPOSE 443
-COPY --from=builder /tmp/target*.jar /tmp/*.jar
-ENTRYPOINT ["java","-jar","opt/app/*.jar"]
+COPY --from=builder target/*.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
