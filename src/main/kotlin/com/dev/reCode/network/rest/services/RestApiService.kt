@@ -2,9 +2,8 @@ package com.dev.reCode.network.rest.services
 
 import com.dev.reCode.Vba2JsConverter
 import com.dev.reCode.converter.TypeConverter
-import com.dev.reCode.network.apiModels.ConverterResponse
+import com.dev.reCode.network.dto.ConverterResponse
 import org.springframework.stereotype.Service
-import kotlin.system.measureTimeMillis
 
 @Service
 class RestApiService {

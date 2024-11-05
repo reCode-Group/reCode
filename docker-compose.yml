@@ -1,13 +1,34 @@
-version: '3.1'
+version: "3.8"
 
 services:
-  jrtb:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  recode:
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/db"
+      JAVA_OPTS: '-Xmx512m'
     restart: always
     ports:
-      - 443
-      - 8080
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - spring-postgres
+  postgres:
+    image: postgres:13.16-bookworm
+    environment:
+      POSTGRES_DB: "db"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "pwd"
+    ports:
+      - "5432:5432"
 
+    networks:
+        -  spring-postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
 
+networks:
+  spring-postgres:
+
+volumes:
+  db-data:
