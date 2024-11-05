@@ -10,12 +10,12 @@
 #EXPOSE 8080
 
 FROM maven:3.8.6-eclipse-temurin-17 as builder
-WORKDIR /opt/app
+WORKDIR /tmp
 COPY . .
 RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:17-jdk-alpine
-WORKDIR /opt/app
+WORKDIR /tmp
 EXPOSE 443
-COPY --from=builder /opt/app/target*.jar /opt/app/*.jar
+COPY --from=builder /tmp/target*.jar /tmp/*.jar
 ENTRYPOINT ["java","-jar","opt/app/*.jar"]
