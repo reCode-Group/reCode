@@ -12,7 +12,7 @@
 FROM maven:3.8.6-eclipse-temurin-17 as builder
 WORKDIR /opt/app
 COPY . .
-RUN mvn clean install -DskipTests
+RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /opt/app
