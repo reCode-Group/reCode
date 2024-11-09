@@ -32,12 +32,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-
                         .requestMatchers("/workspace").authenticated()
                         .requestMatchers("/api/convert").authenticated()
                         .anyRequest().permitAll()
-
-
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout") // Настраиваем URL для логаута
@@ -52,9 +49,8 @@ public class SecurityConfig {
                         .passwordParameter("password")
                         .loginProcessingUrl("/perform-login")
                         .failureUrl("/login").permitAll())
-                .rememberMe(r -> r.rememberMeParameter("remember-me").tokenValiditySeconds(30)
+                .rememberMe(r -> r.rememberMeParameter("remember-me").tokenValiditySeconds(30).key("key")
                 )
-
                 .build();
 
     }
