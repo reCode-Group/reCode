@@ -2,6 +2,7 @@ package com.dev.reCode.network.nonRest.controllers;
 
 import com.dev.reCode.models.User;
 import com.dev.reCode.network.nonRest.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,16 +21,24 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    private String registrationPost(@ModelAttribute User user,  @RequestParam("remember-me") boolean rememberMe) {
+    private String registrationPost(@ModelAttribute User user, @RequestParam("remember-me") boolean rememberMe, HttpServletRequest request) {
 //        userValidator.validate(user, bindingResult);
 //        if (bindingResult.hasErrors()) {
 //            return "registration";
 //        }
         System.out.println(rememberMe);
-        if (userService.register(user).getStatusCode().is2xxSuccessful())
-            return "redirect:/";
-        else
+        String email = user.getEmail();
+        String password = user.getPassword();
+        try {
+            if (userService.register(user).getStatusCode().is2xxSuccessful()) {
+                request.login(email, password);
+                return "redirect:/";
+            } else
+                return "registration";
+        }catch (Exception e) {
             return "registration";
+        }
+
     }
 
 }
