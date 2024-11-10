@@ -12,9 +12,11 @@ import java.util.stream.Collectors;
 public class MyUserDetails implements UserDetails {
 
     private User user;
+    private String email;
 
     public MyUserDetails(User user) {
         System.out.println(user);
+        email = user.getEmail();
         this.user = user;
     }
 
@@ -52,5 +54,9 @@ public class MyUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }
