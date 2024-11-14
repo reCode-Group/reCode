@@ -836,6 +836,10 @@ svg {
 	outline: #000 solid 1px;
 }
 
+.o-button {
+	outline: 1px solid #666666;
+}
+
 .button-link.b-button:hover {
 	outline: none;
 }
