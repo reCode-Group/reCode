@@ -110,6 +110,10 @@ body { flex-direction: row; }
     transform: scale(1.02);
 }
 
+.doc-item.disabled:hover {
+    transform: scale(1.0);
+}
+
 .doc-item .doc-icon {
     color: #005de0;
     width: 3vw;
