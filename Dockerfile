@@ -4,7 +4,7 @@ FROM maven:3.8.6-eclipse-temurin-17 AS builder
 WORKDIR /tmp
 COPY mvnw pom.xml ./
 COPY ./src ./src
-RUN mvn clean package -DskipTests
+RUN mvn package -DskipTests
 
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /tmp

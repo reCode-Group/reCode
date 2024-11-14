@@ -1,6 +1,8 @@
 services:
   recode:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     environment:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/db"
       JAVA_OPTS: '-Xmx512m'
@@ -21,7 +23,7 @@ services:
     ports:
       - "5435:5432"
     networks:
-        -  spring-postgres
+      -  spring-postgres
     volumes:
       - db-data:/var/lib/postgresql/data
 

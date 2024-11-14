@@ -17,6 +17,7 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     private String registration() {
+
         return "registration";
     }
 
