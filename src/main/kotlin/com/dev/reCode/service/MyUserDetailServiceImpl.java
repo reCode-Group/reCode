@@ -1,4 +1,4 @@
-package com.dev.reCode.network.nonRest.services;
+package com.dev.reCode.service;
 
 import com.dev.reCode.models.MyUserDetails;
 import com.dev.reCode.models.User;

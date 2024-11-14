@@ -1,10 +1,9 @@
-package com.dev.reCode.network.rest.controllers;
+package com.dev.reCode.controller.rest;
 
 
 import com.dev.reCode.models.MyUserDetails;
-import com.dev.reCode.network.dto.ConverterResponse;
-import com.dev.reCode.network.nonRest.services.MyUserDetailServiceImpl;
-import com.dev.reCode.network.nonRest.services.RequestRateLimiter;
+import com.dev.reCode.dto.ConverterResponse;
+import com.dev.reCode.service.RequestRateLimiter;
 import com.dev.reCode.network.rest.services.RestApiService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

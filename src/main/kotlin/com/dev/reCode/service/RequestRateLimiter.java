@@ -1,4 +1,4 @@
-package com.dev.reCode.network.nonRest.services;
+package com.dev.reCode.service;
 
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;

@@ -1,4 +1,4 @@
-package com.dev.reCode.network.dto
+package com.dev.reCode.dto
 
 import lombok.AllArgsConstructor
 import lombok.Data

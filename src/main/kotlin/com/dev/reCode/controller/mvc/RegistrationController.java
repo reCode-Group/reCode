@@ -1,7 +1,7 @@
-package com.dev.reCode.network.nonRest.controllers;
+package com.dev.reCode.controller.mvc;
 
 import com.dev.reCode.models.User;
-import com.dev.reCode.network.nonRest.services.UserService;
+import com.dev.reCode.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
