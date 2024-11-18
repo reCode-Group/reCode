@@ -10,5 +10,4 @@ class HomeController {
     fun home(model: Model): String {
         return "index"
     }
-
 }

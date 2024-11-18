@@ -18,8 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
-public class SecurityConfig {
-    @Autowired
+public class SecurityConfig { 
     private MyUserDetailServiceImpl myUserDetailServiceImpl;
 
     @Bean
@@ -31,8 +30,8 @@ public class SecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/logout") // Настраиваем URL для логаута
-                        .logoutSuccessUrl("/registration") // Переход на регистрацию после выхода
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID"))
 

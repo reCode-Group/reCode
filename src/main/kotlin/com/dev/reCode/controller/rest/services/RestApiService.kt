@@ -10,7 +10,6 @@ class RestApiService {
     private val converter = TypeConverter()
     fun convert(inputData: String): ConverterResponse {
         return try {
-            // TODO converter.convert(inputData,"vba-js")
             ConverterResponse(
                 data = Vba2JsConverter().vbaToJs(inputData),
                 status = CODE_SUCCESS

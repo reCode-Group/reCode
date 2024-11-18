@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api")
 @AllArgsConstructor
 public class RestApiController {
-    @Autowired
     private RequestRateLimiter requestRateLimiter;
-
     private RestApiService restApiService;
     @PostMapping("/convert")
     public ConverterResponse handleSubmit(@RequestParam String inputData) {
@@ -25,7 +23,6 @@ public class RestApiController {
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-
         if (!requestRateLimiter.isRequestAllowed(userDetails.getEmail())) {
             return new ConverterResponse("408", "Лимит превышен. Будет доступно через 4 часа.");
         }

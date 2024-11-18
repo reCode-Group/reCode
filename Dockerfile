@@ -1,5 +1,3 @@
-#TODO add app compilation on server side (removing generated files from vcs)
-
 FROM maven:3.8.6-eclipse-temurin-17 AS builder
 WORKDIR /tmp
 COPY mvnw pom.xml ./

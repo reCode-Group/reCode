@@ -12,7 +12,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class RequestRateLimiter {
     private final ConcurrentHashMap<String, Bucket> buckets = new ConcurrentHashMap<>();
-
     public boolean isRequestAllowed(String userId) {
         Bucket bucket = buckets.computeIfAbsent(userId, k -> createNewBucket());
         ConsumptionProbe probe = bucket.tryConsumeAndReturnRemaining(1);
@@ -25,5 +24,4 @@ public class RequestRateLimiter {
                 .addLimit(limit)
                 .build();
     }
-
 }
