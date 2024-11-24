@@ -33,8 +33,8 @@
 
 			<div class="error-container">
 				<!-- Ошибки для конкретных полей -->
-<!--				<div th:if="${#fields.hasErrors('email')}" class="error-message"></div>-->
-<!--				<div th:if="${#fields.hasErrors('password')}" class="error-message"></div>-->
+<!--				<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-message"></div>-->
+<!--				<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></div>-->
 
 				<!-- Общие ошибки -->
 <!--				<div th:if="${#fields.hasGlobalErrors()}" class="error-message"></div>-->
