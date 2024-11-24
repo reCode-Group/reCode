@@ -38,6 +38,14 @@
 					<input type="hidden" name="remember-me" value="false">
 				</label>
 			</div>
+
+			<!--	Все ошибки в одном блоке списком		-->
+<!--			<div class="error-summary" th:if="${#fields.hasAnyErrors()}">-->
+<!--				<ul>-->
+<!--					<li th:each="err : ${#fields.allErrors()}" th:text="${err}" />-->
+<!--				</ul>-->
+<!--			</div>-->
+
 			<button id="login" type="submit">Зарегистрироваться</button>
 
 			<!-- <span class="split-line l-label">или</span>

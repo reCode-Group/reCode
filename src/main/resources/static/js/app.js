@@ -74,4 +74,65 @@ document.addEventListener("DOMContentLoaded", function () {
     navLinks.forEach(function (navLink) {
         navLink.addEventListener('click', toggleMenu);
     });
+
+
+// Модальные окна
+    function openModal(selector) {
+        const modals = document.querySelector('.modals');
+        const modal = document.querySelector(selector);
+
+        if (modals && modal) {
+            modals.style.display = 'flex';
+            modal.style.display = 'block';
+            document.body.classList.add('modals-scroll');
+        }
+    }
+
+    function closeModal() {
+        const modals = document.querySelector('.modals');
+        const allModals = document.querySelectorAll('.modal');
+
+        if (modals) {
+            modals.style.display = 'none';
+        }
+
+        allModals.forEach((modal) => {
+            modal.style.display = 'none';
+        });
+
+        document.body.classList.remove('modals-scroll');
+    }
+
+// Открытие модального окна при клике на элемент с data-modal-target
+    document.querySelectorAll('[data-modal-target]').forEach((trigger) => {
+        trigger.addEventListener('click', function (evt) {
+            evt.preventDefault();
+            const target = this.getAttribute('data-modal-target');
+            openModal(target);
+        });
+    });
+
+// Закрытие модального окна при клике на элемент с классом js-modal-close
+    document.addEventListener('click', function (evt) {
+        if (evt.target.classList.contains('js-modal-close')) {
+            closeModal();
+        }
+    });
+
+// Закрытие модального окна по нажатию на Esc
+    document.addEventListener('keydown', function (evt) {
+        if (evt.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+// Создание глобального API для управления модальными окнами
+    window.api = {
+        modals: {
+            open: openModal,
+            close: closeModal,
+        },
+    };
 });
+
+

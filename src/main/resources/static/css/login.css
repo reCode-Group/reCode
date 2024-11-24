@@ -195,6 +195,61 @@ u {
 	color:#fff;
 }
 
+.error-container {
+	margin-top: 20px; /* Расстояние от кнопки */
+	padding: 10px;
+	background-color: #ffe6e6; /* Светло-красный фон */
+	border: 1px solid #ff4d4d; /* Красная граница */
+	border-radius: 5px;
+}
+
+.error-message {
+	color: #d8000c; /* Красный текст */
+	font-size: 0.9em; /* Уменьшенный текст */
+	margin: 5px 0; /* Расстояние между сообщениями */
+}
+
+/* Стиль для блока с ошибками */
+.error-summary {
+	background-color: #f8d7da; /* Светло-красный фон для ошибок */
+	color: #721c24;  /* Тёмно-красный текст */
+	border: 1px solid #f5c6cb; /* Лёгкая граница, чтобы выделить блок */
+	border-radius: 5px;  /* Скругленные углы */
+	padding: 15px;  /* Отступы вокруг текста */
+	margin-top: 20px;  /* Отступ сверху, чтобы не сливалось с другими элементами */
+	font-size: 14px;  /* Уменьшаем размер шрифта для лучшей читаемости */
+}
+
+/* Стиль для списка ошибок */
+.error-summary ul {
+	list-style-type: none; /* Убираем стандартные маркеры */
+	padding-left: 0; /* Убираем отступ слева */
+	margin: 0; /* Убираем отступы у списка */
+}
+
+/* Стиль для каждого элемента списка */
+.error-summary li {
+	padding: 5px 0;  /* Отступы для каждого пункта */
+	border-bottom: 1px solid #f5c6cb; /* Линия между ошибками */
+}
+
+/* Убираем линию в последнем пункте */
+.error-summary li:last-child {
+	border-bottom: none;
+}
+
+/* Стиль для текста ошибок */
+.error-summary li {
+	font-family: Arial, sans-serif; /* Используем читаемый шрифт */
+	font-size: 14px;  /* Уменьшаем шрифт для ошибок */
+	color: #721c24;  /* Цвет текста */
+}
+
+.error-summary li strong {
+	font-weight: bold; /* Сделаем текст ошибок жирным */
+}
+
+
 /* Медиа-запрос для средних экранов */
 @media screen and (max-width: 1024px) {
 	.login-form {

@@ -30,6 +30,16 @@
 				</label>
 				<a href="" id="ask-reset">Восстановить пароль</a>
 			</div>
+
+			<div class="error-container">
+				<!-- Ошибки для конкретных полей -->
+<!--				<div th:if="${#fields.hasErrors('email')}" class="error-message"></div>-->
+<!--				<div th:if="${#fields.hasErrors('password')}" class="error-message"></div>-->
+
+				<!-- Общие ошибки -->
+<!--				<div th:if="${#fields.hasGlobalErrors()}" class="error-message"></div>-->
+			</div>
+
 			<button name="login" id="login" type="submit">Войти</button>
 			<span class="split-line l-label">или</span>
 			<button id="yandex-btn">
