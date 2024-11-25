@@ -4,7 +4,6 @@ import com.dev.reCode.models.MyUserDetails;
 import com.dev.reCode.models.User;
 import com.dev.reCode.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class MyUserDetailServiceImpl implements UserDetailsService {
+public class MyUserDetailService implements UserDetailsService {
      private UserRepository userRepository;
 
     @Override

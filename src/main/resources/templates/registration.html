@@ -16,7 +16,7 @@
 			<img style="height: 2.5vw;" src="/img/r7.png" alt="">
 		</a>
 		<a class="attention back-link" th:href="@{/login}"><i class="bi bi-arrow-left-short"></i><span>У меня уже есть аккаунт</span></a>
-		<form class="form" th:action="register" th:method="post">
+		<form class="form" th:action="register" th:method="post" th:object="${user}">
 			<div class="account-type">
 				<div class="type-left active">Для физлиц и юрлиц</div>
 				<div class="type-right">Для компаний</div>
@@ -39,12 +39,12 @@
 				</label>
 			</div>
 
-			<!--	Все ошибки в одном блоке списком		-->
-<!--			<div class="error-summary" th:if="${#fields.hasAnyErrors()}">-->
-<!--				<ul>-->
-<!--					<li th:each="err : ${#fields.allErrors()}" th:text="${err}" />-->
-<!--				</ul>-->
-<!--			</div>-->
+<!--				Все ошибки в одном блоке списком-->
+			<div class="error-summary" th:if="${#fields.hasAnyErrors()}">
+				<ul>
+					<li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+				</ul>
+			</div>
 
 			<button id="login" type="submit">Зарегистрироваться</button>
 

@@ -1,4 +1,4 @@
-package com.dev.reCode.network.rest.services
+package com.dev.reCode.service
 
 import com.dev.reCode.Vba2JsConverter
 import com.dev.reCode.converter.TypeConverter
@@ -6,8 +6,7 @@ import com.dev.reCode.dto.ConverterResponse
 import org.springframework.stereotype.Service
 
 @Service
-class RestApiService {
-    private val converter = TypeConverter()
+class ApiService {
     fun convert(inputData: String): ConverterResponse {
         return try {
             ConverterResponse(
@@ -17,7 +16,8 @@ class RestApiService {
         } catch (e: Exception) {
             ConverterResponse(
                 data = e.message,
-                status = CODE_ERROR)
+                status = CODE_ERROR
+            )
         }
     }
 

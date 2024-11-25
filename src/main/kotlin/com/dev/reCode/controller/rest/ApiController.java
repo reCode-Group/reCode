@@ -4,9 +4,8 @@ package com.dev.reCode.controller.rest;
 import com.dev.reCode.models.MyUserDetails;
 import com.dev.reCode.dto.ConverterResponse;
 import com.dev.reCode.service.RequestRateLimiter;
-import com.dev.reCode.network.rest.services.RestApiService;
+import com.dev.reCode.service.ApiService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api")
 @AllArgsConstructor
-public class RestApiController {
+public class ApiController {
     private RequestRateLimiter requestRateLimiter;
-    private RestApiService restApiService;
+    private ApiService apiService;
     @PostMapping("/convert")
     public ConverterResponse handleSubmit(@RequestParam String inputData) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder
@@ -26,6 +25,6 @@ public class RestApiController {
         if (!requestRateLimiter.isRequestAllowed(userDetails.getEmail())) {
             return new ConverterResponse("408", "Лимит превышен. Будет доступно через 4 часа.");
         }
-        return restApiService.convert(inputData);
+        return apiService.convert(inputData);
     }
 }

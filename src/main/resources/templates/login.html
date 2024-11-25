@@ -31,12 +31,16 @@
 				<a href="" id="ask-reset">Восстановить пароль</a>
 			</div>
 
-			<div class="error-container">
-				<!-- Ошибки для конкретных полей -->
+			<div class="error-container" th:if="${param.error}">
+<!--				 Ошибки для конкретных полей -->
+				<div class="error-message" th:if="${param.error}">
+					Неправильный логин или пароль.
+				</div>
+
 <!--				<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-message"></div>-->
 <!--				<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></div>-->
 
-				<!-- Общие ошибки -->
+<!--&lt;!&ndash;				 Общие ошибки &ndash;&gt;-->
 <!--				<div th:if="${#fields.hasGlobalErrors()}" class="error-message"></div>-->
 			</div>
 
