@@ -25,7 +25,7 @@ scrollwrapper.addEventListener('mousemove', (e) => {
 const scrollToRight = () => {
 	scrollwrapper.scrollBy({
 		left: 200,
-		behavior: 'smooth'
+		behavior:
 	});
 }
 
