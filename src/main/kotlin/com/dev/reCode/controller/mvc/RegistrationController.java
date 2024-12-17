@@ -31,8 +31,6 @@ public class RegistrationController {
     private String registrationPost(@ModelAttribute("user") User user, BindingResult bindingResult , HttpServletRequest request, Model model) {
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
-            System.out.println("hasErrors");
-            System.out.println(bindingResult.getAllErrors());
             return "registration";
         }
 

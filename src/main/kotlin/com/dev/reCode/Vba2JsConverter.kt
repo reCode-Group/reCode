@@ -1,5 +1,4 @@
 package com.dev.reCode
-
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
@@ -33,6 +32,22 @@ class Vba2JsConverter {
     }
 
 
+    fun removeVbaComments(vbaCode: String): String {
+        return vbaCode
+            .lines() // Разбиваем код на строки
+            .map { line ->
+                var commentIndex = line.indexOf("'")
+                if (commentIndex == -1) {
+                    commentIndex = line.lowercase().indexOf("rem")
+                }
+                if (commentIndex != -1) line.substring(0, commentIndex).trimEnd() // Оставляем часть строки до комментария
+                else line // Если комментария нет, оставляем строку как есть
+            }
+            .joinToString("\n") // Собираем строки обратно в текст
+    }
+    fun removeTags(vbaCode: String): String {
+        return vbaCode.replace("#", "")
+    }
     private var strs = mutableListOf<String>()
     private fun thProcess(vbs: String): String {
         var s = vbs
@@ -43,12 +58,14 @@ class Vba2JsConverter {
         s = s.replace("Sub", "(function(){")
 
         s = hideStrings(s)
+        s = removeVbaComments(s)
 
         s = s.replace("&".toRegex(), "+")
         s = s.replace("_\n".toRegex(), "")
         s = s.replace(":[^=]".toRegex(), "\n")
         s = s.replace("\\bthen\\b[ \\t](.+)".toRegex(), "then\n$1\nEnd If")
 
+        s = removeTags(s)
         // split block into separate lines
         var a = s.split('\n').toMutableList()
 
@@ -97,43 +114,43 @@ class Vba2JsConverter {
                 a[i] = a[i].replace("\\bcall\\s".toRegex(RegexOption.IGNORE_CASE), "")
             } else if (Regex("\\sSET\\s+").containsMatchIn(a[i])) {
                 a[i] = a[i].replace("\\sSET\\s+".toRegex(RegexOption.IGNORE_CASE), "")
-            }
-            else if (Regex(".*Interior\\.Color.*=.*RGB(.*)\\s", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
-            {
-                a[i] = a[i].replace("Interior\\.Color.*=.*RGB(.*)".toRegex(RegexOption.IGNORE_CASE), "SetFillColor(Api.CreateColorFromRGB${Regex("RGB(.*)").find(a[i])!!.groupValues[1]});" )
-            }
-            else if (Regex(".*Font\\.Color.*=.*RGB(.*)\\s", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
-            {
-                a[i] = a[i].replace("Font\\.Color.*=.*RGB(.*)".toRegex(RegexOption.IGNORE_CASE), "SetFontColor(Api.CreateColorFromRGB${Regex("RGB(.*)").find(a[i])!!.groupValues[1]});" )
-            }
-
-            else if (Regex(".*Font\\.Bold.*=.*\\s", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
-            {
-                a[i] = a[i].replace("Font\\.Bold.*=(.*)".toRegex(RegexOption.IGNORE_CASE), "SetBold(${Regex("Font\\.Bold.*=(.*)").find(a[i])!!.groupValues[1].toLowerCase()})" )
-            }
-
-            else if (Regex(".*\\.Merge", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
-            {
+            } else if (Regex(".*Interior\\.Color.*=.*RGB(.*)\\s", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
+                a[i] = a[i].replace(
+                    "Interior\\.Color.*=.*RGB(.*)".toRegex(RegexOption.IGNORE_CASE),
+                    "SetFillColor(Api.CreateColorFromRGB${Regex("RGB(.*)").find(a[i])!!.groupValues[1]});"
+                )
+            } else if (Regex(".*Font\\.Color.*=.*RGB(.*)\\s", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
+                a[i] = a[i].replace(
+                    "Font\\.Color.*=.*RGB(.*)".toRegex(RegexOption.IGNORE_CASE),
+                    "SetFontColor(Api.CreateColorFromRGB${Regex("RGB(.*)").find(a[i])!!.groupValues[1]});"
+                )
+            } else if (Regex(".*Font\\.Bold.*=.*\\s", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
+                a[i] = a[i].replace(
+                    "Font\\.Bold.*=(.*)".toRegex(RegexOption.IGNORE_CASE),
+                    "SetBold(${Regex("Font\\.Bold.*=(.*)").find(a[i])!!.groupValues[1].toLowerCase()})"
+                )
+            } else if (Regex(".*\\.Merge", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = a[i] + "(true)"
-            }
-            else if (Regex(".*\\.UnMerge", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
-            {
+            } else if (Regex(".*\\.UnMerge", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = a[i] + "()"
-            }
-            else if (Regex("^Columns\\(", RegexOption.IGNORE_CASE).containsMatchIn(a[i]))
-            {
-                var d = strs[Regex("Columns\\(\u0007(.*)\u0007\\)", RegexOption.IGNORE_CASE).find(a[i])!!.groupValues[1].toInt()]
-                d = d.substring(1, d.length-1) // убираем кавычки
-                a[i] = "Api.GetActiveSheet().SetColumnWidth(${convertFromAlphabet(d)}, ${Regex("=\\s*(.*)").find(a[i])!!.groupValues[1]})"
-            }
-
-            else if (Regex("\\bSelection\\.TypeText\\s*Text\\s*:=\\s*(.*)", RegexOption.IGNORE_CASE).containsMatchIn(a[i])){
+            } else if (Regex("^Columns\\(", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
+                var d = strs[Regex(
+                    "Columns\\(\u0007(.*)\u0007\\)",
+                    RegexOption.IGNORE_CASE
+                ).find(a[i])!!.groupValues[1].toInt()]
+                d = d.substring(1, d.length - 1) // убираем кавычки
+                a[i] =
+                    "Api.GetActiveSheet().SetColumnWidth(${convertFromAlphabet(d)}, ${Regex("=\\s*(.*)").find(a[i])!!.groupValues[1]})"
+            } else if (Regex(
+                    "\\bSelection\\.TypeText\\s*Text\\s*:=\\s*(.*)",
+                    RegexOption.IGNORE_CASE
+                ).containsMatchIn(a[i])
+            ) {
                 a[i] = "var oDocument = Api.GetDocument();\n" +
                         "var oParagraph = Api.CreateParagraph();\n" +
                         "oParagraph.AddText(${Regex(":=\\s*(.*)").find(a[i])!!.groupValues[1]});\n" +
                         "oDocument.InsertContent([oParagraph]);"
-            }
-            else if (Regex(
+            } else if (Regex(
                     "\\bCELLS\\([0-9]+\\s*,\\s*[0-9]+\\s*\\)\\s*=",
                     RegexOption.IGNORE_CASE
                 ).containsMatchIn(a[i])
@@ -143,7 +160,11 @@ class Vba2JsConverter {
                     RegexOption.IGNORE_CASE
                 ).findAll(a[i]).map { Pair(it.groupValues[1].toInt(), it.groupValues[2].toInt()) }.toList()[0]
                 a[i] =
-                    "Api.GetActiveSheet().GetRange(${addHideString("\"${convertToAlphabet(cInt)}$r\"")}).SetValue(${Regex("=\\s*(.*)").find(a[i])!!.groupValues[1]})"
+                    "Api.GetActiveSheet().GetRange(${addHideString("\"${convertToAlphabet(cInt)}$r\"")}).SetValue(${
+                        Regex(
+                            "=\\s*(.*)"
+                        ).find(a[i])!!.groupValues[1]
+                    })"
 
             } else if (Regex("(?<![a-zA-Z])ActiveSheet.*", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = a[i].replace("ActiveSheet".toRegex(RegexOption.IGNORE_CASE), "Api.GetActiveSheet()")
@@ -227,6 +248,14 @@ class Vba2JsConverter {
                 a[i] = a[i].replace("^CONST".toRegex(), "const")
             } else if (Regex("^Option\\s+Explicit.*[\\r\\n]").containsMatchIn(a[i])) {
                 a[i] = a[i].replace("^Option\\s+Explicit.*[\\r\\n]".toRegex(RegexOption.IGNORE_CASE), "")
+            } else if (Regex("^\\.", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
+                a[i] = withArray.last() + a[i]
+            } else if (Regex("[\\s\\(]\\.", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
+                a[i] = a[i].replace(
+                    Regex("([\\s\\(])\\.", RegexOption.IGNORE_CASE),
+                    "$1${withArray.last()}."
+                )
+                println(a[i])
             } else if (Regex("^END\\s*WITH", RegexOption.IGNORE_CASE).containsMatchIn(a[i])) {
                 a[i] = ""
                 if (withArray.isNotEmpty())
