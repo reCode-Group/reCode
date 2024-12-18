@@ -14,7 +14,7 @@ html {
 body {
 	height: 100%;
 	display: flex;
-	background: no-repeat url("../img/bg.jpg");
+	background: no-repeat url("../img/bg.webp");
 	background-size: cover;
 	color:#333;
 }
