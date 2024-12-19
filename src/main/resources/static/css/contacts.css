@@ -77,3 +77,82 @@
 		width: 100%;
 	}
 }
+
+
+
+/*  СТРАНИЦА С ИСТОРИЕЙ КОНВЕРТАЦИЙ  */
+.table-container {
+	overflow-x: auto; /* Адаптивность для небольших экранов */
+	margin: 0 auto;
+}
+
+/* Стили для таблицы */
+.conversion-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 15px 0;
+	font-size: 1em;
+	text-align: left;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+}
+
+.conversion-table th,
+.conversion-table td {
+	border: 1px solid #ddd;
+	padding: 10px;
+	vertical-align: top;
+}
+
+.conversion-table th {
+	background-color: #f4f4f4;
+	font-weight: bold;
+	text-align: center;
+}
+
+.conversion-table td pre {
+	font-family: monospace;
+	white-space: pre-wrap; /* Сохраняет форматирование, но переносит строки */
+	margin: 0;
+}
+
+/* Стили для пагинации */
+.pagination {
+	text-align: center;
+	margin-top: 10px;
+}
+
+.pagination button {
+	padding: 10px 20px;
+	margin: 5px;
+	border: none;
+	background-color: #007bff;
+	color: white;
+	font-size: 1em;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+.pagination button:disabled {
+	background-color: #cccccc;
+	cursor: not-allowed;
+}
+
+.pagination span {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin: 0 10px;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+	.conversion-table th,
+	.conversion-table td {
+		font-size: 0.9em;
+	}
+
+	.pagination button {
+		padding: 5px 10px;
+		font-size: 0.9em;
+	}
+}

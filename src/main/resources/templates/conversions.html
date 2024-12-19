@@ -86,7 +86,7 @@
         <div class="menu-overlay" style="display: none; visibility: hidden;"></div>
         <section class="conversions m-r m-l">
             <span class="section-heading">История конвертаций</span>
-            <div>
+            <div class="table-container">
                 <table class="conversion-table">
                     <thead>
                     <tr>
@@ -95,30 +95,17 @@
                         <th>Целевой код</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr th:each="conversion : ${conversions}">
-                        <td th:text="${#dates.format(conversion.date, 'dd.MM.yyyy HH:mm')}"></td>
-                        <td th:text="${conversion.originCode}"></td>
-                        <td th:text="${conversion.targetCode}"></td>
-                    </tr>
+                    <tbody id="conversions-body">
+                    <!-- Данные будут динамически добавлены через JavaScript -->
                     </tbody>
                 </table>
-
-                <!-- Пагинация -->
                 <div class="pagination">
-                    <a th:if="${currentPage > 0}"
-                       th:href="@{'/conversions'(page=${currentPage - 1}, size=10)}"
-                       class="pagination-button">Предыдущая</a>
-
-                    <span>Страница <span th:text="${currentPage + 1}"></span> из <span th:text="${totalPages}"></span></span>
-
-                    <a th:if="${currentPage + 1 < totalPages}"
-                       th:href="@{'/conversions'(page=${currentPage + 1}, size=10)}"
-                       class="pagination-button">Следующая</a>
+                    <button id="prevPage" disabled>Предыдущая</button>
+                    <span>Страница <span id="currentPage">1</span></span>
+                    <button id="nextPage">Следующая</button>
                 </div>
             </div>
         </section>
-
 
     </main>
 
@@ -203,6 +190,62 @@
             <path d="M6 6L18 18M18 6L6 18" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </symbol>
     </svg>
+
+    <script>
+        let currentPage = 0;
+
+        async function fetchConversions(page) {
+            try {
+                const response = await fetch(`/api/conversions?page=${page}`);
+                if (!response.ok) {
+                    throw new Error(`Ошибка: ${response.status}`);
+                }
+
+                const data = await response.json();
+                renderConversions(data.conversions);
+                updatePagination(data.conversions.length, page);
+            } catch (error) {
+                console.error("Ошибка при загрузке данных:", error);
+            }
+        }
+
+        function renderConversions(conversions) {
+            const tbody = document.getElementById("conversions-body");
+            tbody.innerHTML = ""; // Очищаем старые данные
+
+            conversions.forEach(conversion => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                <td>${new Date(conversion.date).toLocaleString()}</td>
+                <td><pre>${conversion.originCode}</pre></td>
+                <td><pre>${conversion.targetCode}</pre></td>
+            `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function updatePagination(itemsCount, page) {
+            const prevButton = document.getElementById("prevPage");
+            const nextButton = document.getElementById("nextPage");
+            const currentPageSpan = document.getElementById("currentPage");
+
+            currentPageSpan.textContent = page + 1;
+
+            prevButton.disabled = page === 0;
+            nextButton.disabled = itemsCount === 0; // Отключаем "Следующая", если больше данных нет
+
+            prevButton.onclick = () => {
+                if (page > 0) fetchConversions(--currentPage);
+            };
+
+            nextButton.onclick = () => {
+                fetchConversions(++currentPage);
+            };
+        }
+
+        // Загрузка данных для первой страницы
+        fetchConversions(currentPage)
+    </script>
 
 </body>
 </html>
