@@ -9,3 +9,4 @@ WORKDIR /tmp
 EXPOSE 443
 COPY --from=builder /tmp/target/*.jar /tmp/*.jar
 ENTRYPOINT ["java","-jar","/tmp/*.jar"]
+

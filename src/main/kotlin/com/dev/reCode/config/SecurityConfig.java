@@ -24,7 +24,8 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/workspace").authenticated()
-                        .requestMatchers("/api/convert").authenticated().anyRequest().permitAll())
+                        .requestMatchers("/api/**").authenticated()
+                         .anyRequest().permitAll())
                 .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/")
                         .invalidateHttpSession(true).deleteCookies("JSESSIONID"))
                 .formLogin(form -> form

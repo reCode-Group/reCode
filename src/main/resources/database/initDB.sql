@@ -23,6 +23,25 @@ create table if not exists users_roles
     primary key (user_id, role_id)
 );
 
-insert into roles values
-                      (1, 'ROLE_USER'),
-                      (2, 'ROLE_ADMIN');
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+create table if not exists conversions
+(
+    id TEXT PRIMARY KEY DEFAULT encode(gen_random_bytes(6), 'base64'),
+    date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    user_id integer not null references users(id) on delete cascade ,
+    origin_code TEXT NOT NULL,
+    target_code TEXT NOT NULL
+);
+create table if not exists reports
+(
+    id        serial primary key,
+    conversion_id TEXT  not null references conversions(id),
+    message TEXT NOT NULL
+);
+
+INSERT INTO roles (id, role_name)
+VALUES
+    (1, 'ROLE_USER'),
+    (2, 'ROLE_ADMIN')
+ON CONFLICT (id) DO NOTHING;

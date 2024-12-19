@@ -14,8 +14,13 @@ public class RequestRateLimiter {
     private final ConcurrentHashMap<String, Bucket> buckets = new ConcurrentHashMap<>();
     public boolean isRequestAllowed(String userId) {
         Bucket bucket = buckets.computeIfAbsent(userId, k -> createNewBucket());
+        return bucket.getAvailableTokens() > 0;
+    }
+
+    public void consume(String userId) {
+        Bucket bucket = buckets.computeIfAbsent(userId, k -> createNewBucket());
         ConsumptionProbe probe = bucket.tryConsumeAndReturnRemaining(1);
-        return probe.isConsumed();
+//        probe.isConsumed();
     }
 
     private Bucket createNewBucket() {

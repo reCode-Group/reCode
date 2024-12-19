@@ -17,10 +17,16 @@ public class MyUserDetails implements UserDetails {
         email = user.getEmail();
         this.user = user;
     }
+
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return user.getRoles().stream().map(r-> new SimpleGrantedAuthority(r.getRoleName())).toList();
     }
+
     @Override
     public String getPassword() {
         return user.getPassword();

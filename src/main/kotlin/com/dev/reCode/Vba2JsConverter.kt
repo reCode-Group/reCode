@@ -331,9 +331,9 @@ class Vba2JsConverter {
 
         a = a.filter { it.isNotBlank() }.toMutableList() // remove empty items
 
-        for (i in 0..<a.size) {
-            if (a[i].matches(Regex("[^}{:;]+\$")))
-                a[i] += ";"
+        for (k in 0..<a.size) {
+            if (a[k].matches(Regex("[^}{:;]+\$")))
+                a[k] += ";"
         }
 
         var ss = "$fxHead\n$vars\n${a.joinToString("\n")}\n})();"
