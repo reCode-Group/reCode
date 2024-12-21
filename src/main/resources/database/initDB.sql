@@ -29,14 +29,14 @@ create table if not exists conversions
 (
     id TEXT PRIMARY KEY DEFAULT encode(gen_random_bytes(6), 'base64'),
     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    user_id integer not null references users(id) on delete cascade ,
+    user_id integer not null references users(id) on delete cascade,
     origin_code TEXT NOT NULL,
     target_code TEXT NOT NULL
 );
 create table if not exists reports
 (
     id        serial primary key,
-    conversion_id TEXT  not null references conversions(id),
+    conversion_id TEXT  not null references conversions(id) ON DELETE CASCADE,
     message TEXT NOT NULL
 );
 

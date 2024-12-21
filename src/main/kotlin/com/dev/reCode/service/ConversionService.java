@@ -25,8 +25,7 @@ public class ConversionService {
 
     public void saveConversion(User user, String originCode, String targetCode) {
         Conversion conversion = new Conversion();
-        conversion.setId(Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes()).substring(0, 10));
-
+        conversion.setId(Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes()).substring(0, 6));
         conversion.setUser(user);
         conversion.setOriginCode(originCode);
         conversion.setTargetCode(targetCode);
@@ -36,9 +35,7 @@ public class ConversionService {
 
     public ConversionsResponse findAllByUser(int page, User user) {
         int size = 10;
-
         PageRequest pageable = PageRequest.of(page, size);
-
         System.out.println(user.getEmail());
         List<Conversion> conversions = conversionRepository.findPageableAllByUser(pageable, user).getContent();
         System.out.println(conversions);

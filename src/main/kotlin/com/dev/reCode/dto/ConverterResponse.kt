@@ -7,6 +7,7 @@ import lombok.Setter
 
 @AllArgsConstructor
 class ConverterResponse (
+    //TODO: добавить айди созданного макроса
     val status: String? = null,
     val data: String? = null
 )

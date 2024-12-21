@@ -2,23 +2,14 @@ package com.dev.reCode.controller.rest;
 
 
 import com.dev.reCode.dto.ConversionsResponse;
-import com.dev.reCode.models.Conversion;
 import com.dev.reCode.models.MyUserDetails;
 import com.dev.reCode.dto.ConverterResponse;
 import com.dev.reCode.service.ConversionService;
 import com.dev.reCode.service.RequestRateLimiter;
 import com.dev.reCode.service.ApiService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
 
 
 @RestController
@@ -40,6 +31,7 @@ public class ApiController {
             return new ConverterResponse("408", "Лимит превышен. Будет доступно через 4 часа.");
         }
 
+        //TODO: Проверка валидности входного макроса (лексика и синтаксис)
         ConverterResponse response = apiService.convert(inputData);
         if (response.getStatus().equals("200")) {
             requestRateLimiter.consume(userDetails.getEmail());
