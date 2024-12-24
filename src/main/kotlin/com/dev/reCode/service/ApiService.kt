@@ -3,6 +3,8 @@ package com.dev.reCode.service
 import com.dev.reCode.Vba2JsConverter
 import com.dev.reCode.converter.TypeConverter
 import com.dev.reCode.dto.ConverterResponse
+import org.aspectj.apache.bcel.classfile.Unknown
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Timeouts
 import org.springframework.stereotype.Service
 
 @Service
@@ -24,5 +26,8 @@ class ApiService {
     private companion object {
         const val CODE_ERROR = "500"
         const val CODE_SUCCESS = "200"
+        const val INTERNAL_ERROR = "200"
+        const val UNKNOWN_ERROR = "200"
+        const val TIMEOUT_ERROR = "200"
     }
 }

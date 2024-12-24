@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping
 
 @Controller
 class DocumentationController {
-    @GetMapping("/documentation")
+    @GetMapping("/docs")
     fun documentation(): String {
         return "documentation"
     }

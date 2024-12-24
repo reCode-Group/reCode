@@ -5,7 +5,8 @@ create table if not exists users
     email      varchar(255) not null unique,
     password   varchar(255) not null,
     surname    varchar(255)  not null,
-    lastname   varchar(50)
+    lastname   varchar(50),
+	enabled	   varchar(50)
 );
 
 
