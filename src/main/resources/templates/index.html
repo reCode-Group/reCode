@@ -52,11 +52,12 @@
                     Поиск
                 </div>
                 <nav class="navbar">
-                    <a class="nav-link" href="#about">О стартапе</a>
-                    <a class="nav-link" th:href="@{/workspace}">Демо-версия</a>
+                    <a class="nav-link" href="#about">О проекте</a>
+                    <a class="nav-link" th:href="@{/workspace}">Переводчик</a>
                     <a class="nav-link" th:href="@{/blank}">Мастерская макросов</a>
                     <a class="nav-link" href="#partners">Партнеры</a>
-                    <a class="nav-link" th:href="@{/docs}">Ресурсы
+                    <a class="nav-link" href="/">Продукты</a>
+                    <a class="nav-link" th:href="@{/documentation}">Ресурсы
                         <svg width="13" height="13" viewBox="0 -3 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.29297 6.70711C3.68349 6.31658 4.31666 6.31658 4.70718 6.70711L12.0001 14L19.293 6.70711C19.6835 6.31658 20.3167 6.31658 20.7072 6.70711L21.4143 7.41421C21.8048 7.80474 21.8048 8.4379 21.4143 8.82843L13.0607 17.182C12.4749 17.7678 11.5252 17.7678 10.9394 17.182L2.58586 8.82843C2.19534 8.4379 2.19534 7.80474 2.58586 7.41422L3.29297 6.70711Z"/></svg>
                     </a>
                     <a class="nav-link" th:href="@{/contacts}">Помощь</a>
@@ -65,8 +66,8 @@
         </div>
         <div class="header-bottom">
             <nav class="m-l navbar">
-                <a class="nav-link" href="#about">О стартапе</a>
-                <a class="nav-link" th:href="@{/workspace}">Демо-версия</a>
+                <a class="nav-link" href="#about">О проекте</a>
+                <a class="nav-link" th:href="@{/workspace}">Переводчик</a>
                 <a class="nav-link" th:href="@{/blank}">Мастерская макросов</a>
                 <a class="nav-link" href="#partners">Партнеры</a>
                 <a class="nav-link" th:href="@{/docs}">Ресурсы
@@ -124,7 +125,7 @@
             </div>
         </section>
 
-        <section id="team" class="team m-l m-r">
+        <section style="display: none;" id="team" class="team m-l m-r">
             <span class="section-heading">Команда проекта</span>
             <div class="team-container">
                 <div class="team-item">
@@ -207,7 +208,7 @@
             </div>
             <div class="split-right">
                 <span class="split-heading">Полезные ссылки</span>
-                <a class="split-link" href="https:/vk.com/recode_official">Узнать больше о Ре-Код.рф</a>
+                <a class="split-link" target="_blank" href="https:/vk.com/recode_official">Узнать больше о Ре-Код.рф</a>
                 <a class="split-link" th:href="@{/workspace}">Демонстрационная версия</a>
                 <a class="split-link" th:href="@{/blank}">Мастерская макросов</a>
                 <a class="split-link" th:href="@{/docs}">Ознакомится с документацией</a>

@@ -2,8 +2,6 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Open Sans', 'Helvetica Neue', sans-serif, Helvetica, sans-serif;
-	font-size: 14px;
 }
 
 ::selection {
@@ -32,6 +30,8 @@ html {
 body {
 	display: flex;
 	flex-direction: column;
+	font-family: 'Open Sans', 'Helvetica Neue', sans-serif, Helvetica, sans-serif;
+	font-size: 14px;
 }
 
 a {
@@ -68,10 +68,13 @@ svg {
 
 }
 
+/* TODO переписать функцию поиска */
 .search {
 	border-radius: 2rem;
 	background: var(--gray-bg);
 	color: #373e45;
+
+	visibility: hidden;
 
 	display: flex;
 	align-items: center;
@@ -1054,6 +1057,38 @@ svg {
 /* Анимации */
 @-webkit-keyframes typing { from { width: 0; } }
 @-webkit-keyframes blink-caret { 50% { border-color: transparent; } }
+
+@media screen and (max-width: 1920px) {
+
+}
+
+@media screen and (max-width: 1600px) {
+	body {
+		font-size: 13px;
+	}
+}
+
+@media screen and (max-width: 1440px) {
+	body {
+		font-size: 12px;
+	}
+}
+
+@media screen and (max-width: 1366px) {
+
+}
+
+@media screen and (max-width: 1280px) {
+	body {
+		font-size: 12px;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	body {
+		font-size: 11px;
+	}
+}
 
 /* Медиа-запрос для средних экранов */
 @media screen and (max-width: 900px) {
