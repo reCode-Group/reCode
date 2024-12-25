@@ -19,7 +19,8 @@ public class User {
     private String lastname;
     private String email;
     private String password;
-    private boolean enabled;
+    @Column(name = "has_subscription")
+    private boolean hasSubscription;
     private String verificationCode;
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "users_roles",
@@ -27,5 +28,4 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
-
 }

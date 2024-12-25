@@ -42,7 +42,7 @@ public class UserService {
 
         String randomCode = java.util.UUID.randomUUID().toString().substring(0, 8);
         user.setVerificationCode(randomCode);
-        user.setEnabled(false);
+        user.setHasSubscription(false);
 
         save(user);
 
@@ -83,11 +83,11 @@ public class UserService {
     public boolean verify(String verificationCode) {
         User user = userRepository.findByVerificationCode(verificationCode);
 
-        if ((user == null) || user.isEnabled()) {
+        if ((user == null) || user.isHasSubscription()) {
             return false;
         } else {
             user.setVerificationCode(null);
-            user.setEnabled(true);
+            user.setHasSubscription(true);
             save(user);
 
             return true;
