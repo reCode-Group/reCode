@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 
 @RestController
 @RequestMapping("api")
@@ -28,14 +30,16 @@ public class ApiController {
                 .getPrincipal();
 
         if (!requestRateLimiter.isRequestAllowed(userDetails.getEmail())) {
-            return new ConverterResponse("408", "Лимит превышен. Будет доступно через 4 часа.");
+            return new ConverterResponse( null, "408", "Лимит превышен. Будет доступно через 4 часа.", null);
         }
 
         //TODO: Проверка валидности входного макроса (лексика и синтаксис)
         ConverterResponse response = apiService.convert(inputData);
-        if (response.getStatus().equals("200")) {
-            requestRateLimiter.consume(userDetails.getEmail());
-            conversionService.saveConversion(userDetails.getUser(), inputData, response.getData());
+        if (Objects.equals(response.getStatus(), "0")) {
+            long remainConverts = requestRateLimiter.consume(userDetails.getEmail());
+            String id = conversionService.saveConversion(userDetails.getUser(), inputData, response.getData());
+            response.setId(id);
+            response.setConvertsRemaining((int) remainConverts);
          }
         return response;
     }

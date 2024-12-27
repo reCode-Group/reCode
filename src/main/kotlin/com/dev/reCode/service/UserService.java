@@ -41,59 +41,57 @@ public class UserService {
         user.setPassword(encodedPassword);
 
         String randomCode = java.util.UUID.randomUUID().toString().substring(0, 8);
-        user.setVerificationCode(randomCode);
+//        user.setVerificationCode(randomCode);
         user.setHasSubscription(false);
 
         save(user);
-
-        sendVerificationEmail(user, siteURL);
+//        sendVerificationEmail(user, siteURL);
     }
 
-    private void sendVerificationEmail(User user, String siteURL)
-            throws MessagingException, UnsupportedEncodingException {
-        String toAddress = user.getEmail();
-        String fromAddress = "your email address";
-        String senderName = "your company name";
-        String subject = "Please verify your registration";
-        String content = "Dear [[name]],<br>"
-                + "Please click the link below to verify your registration:<br>"
-                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-                + "Thank you,<br>"
-                + "Your company name.";
-
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-        helper.setFrom(fromAddress, senderName);
-        helper.setTo(toAddress);
-        helper.setSubject(subject);
-
-        content = content.replace("[[name]]", user.getName());
-        String verifyURL = siteURL + "/verify?code=" + user.getVerificationCode();
-
-        content = content.replace("[[URL]]", verifyURL);
-
-        helper.setText(content, true);
-
-        mailSender.send(message);
-
-        System.out.println("Email has been sent");
-    }
-
-    public boolean verify(String verificationCode) {
-        User user = userRepository.findByVerificationCode(verificationCode);
-
-        if ((user == null) || user.isHasSubscription()) {
-            return false;
-        } else {
-            user.setVerificationCode(null);
-            user.setHasSubscription(true);
-            save(user);
-
-            return true;
-        }
-
-    }
+//    private void sendVerificationEmail(User user, String siteURL)
+//            throws MessagingException, UnsupportedEncodingException {
+//        String toAddress = user.getEmail();
+//        String fromAddress = "your email address";
+//        String senderName = "your company name";
+//        String subject = "Please verify your registration";
+//        String content = "Dear [[name]],<br>"
+//                + "Please click the link below to verify your registration:<br>"
+//                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
+//                + "Thank you,<br>"
+//                + "Your company name.";
+//
+//        MimeMessage message = mailSender.createMimeMessage();
+//        MimeMessageHelper helper = new MimeMessageHelper(message);
+//
+//        helper.setFrom(fromAddress, senderName);
+//        helper.setTo(toAddress);
+//        helper.setSubject(subject);
+//
+//        content = content.replace("[[name]]", user.getName());
+//        String verifyURL = siteURL + "/verify?code=" + user.getVerificationCode();
+//
+//        content = content.replace("[[URL]]", verifyURL);
+//
+//        helper.setText(content, true);
+//
+//        mailSender.send(message);
+//
+//        System.out.println("Email has been sent");
+//    }
+//
+//    public boolean verify(String verificationCode) {
+//        User user = userRepository.findByVerificationCode(verificationCode);
+//
+//        if ((user == null) || user.isHasSubscription()) {
+//            return false;
+//        } else {
+//            user.setVerificationCode(null);
+//            user.setHasSubscription(true);
+//            save(user);
+//
+//            return true;
+//        }
+//    }
     public User findUserByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         return user.orElse(null);

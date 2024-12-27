@@ -6,8 +6,13 @@ import lombok.Getter
 import lombok.Setter
 
 @AllArgsConstructor
+
 class ConverterResponse (
-    //TODO: добавить айди созданного макроса
+
+    var id: String? = null,
     val status: String? = null,
-    val data: String? = null
+    val data: String? = null,
+    var convertsRemaining: Int? = null
 )
+
+

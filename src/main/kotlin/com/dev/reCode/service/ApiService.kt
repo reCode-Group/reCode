@@ -17,17 +17,17 @@ class ApiService {
             )
         } catch (e: Exception) {
             ConverterResponse(
-                data = e.message,
+                data = "",
                 status = CODE_ERROR
             )
         }
     }
 
     private companion object {
-        const val CODE_ERROR = "500"
-        const val CODE_SUCCESS = "200"
-        const val INTERNAL_ERROR = "200"
-        const val UNKNOWN_ERROR = "200"
-        const val TIMEOUT_ERROR = "200"
+        const val CODE_SUCCESS = "0"
+        const val CODE_ERROR = "1"
+        const val TIMEOUT_ERROR = "2"
+        const val INTERNAL_ERROR = "3"
+        const val UNKNOWN_ERROR = "4"
     }
 }

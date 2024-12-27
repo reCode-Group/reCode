@@ -59,12 +59,12 @@ public class RegistrationController {
         return siteURL.replace(request.getServletPath(), "");
     }
 
-    @GetMapping("/verify")
-    public String verifyUser(@Param("code") String code) {
-        if (userService.verify(code)) {
-            return "redirect:/";
-        } else {
-            return "registration";
-        }
-    }
+//    @GetMapping("/verify")
+//    public String verifyUser(@Param("code") String code) {
+//        if (userService.verify(code)) {
+//            return "redirect:/";
+//        } else {
+//            return "registration";
+//        }
+//    }
 }

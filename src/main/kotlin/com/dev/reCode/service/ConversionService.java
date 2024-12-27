@@ -23,14 +23,14 @@ import java.util.UUID;
 public class ConversionService {
     private final ConversionRepository conversionRepository;
 
-    public void saveConversion(User user, String originCode, String targetCode) {
+    public String saveConversion(User user, String originCode, String targetCode) {
         Conversion conversion = new Conversion();
         conversion.setId(Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes()).substring(0, 6));
         conversion.setUser(user);
         conversion.setOriginCode(originCode);
         conversion.setTargetCode(targetCode);
         conversion.setDate(LocalDateTime.now());
-        conversionRepository.save(conversion);
+        return conversionRepository.save(conversion).getId();
     }
 
     public ConversionsResponse findAllByUser(int page, User user) {

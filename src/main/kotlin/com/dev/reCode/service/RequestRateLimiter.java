@@ -17,9 +17,10 @@ public class RequestRateLimiter {
         return bucket.getAvailableTokens() > 0;
     }
 
-    public void consume(String userId) {
+    public long consume(String userId) {
         Bucket bucket = buckets.computeIfAbsent(userId, k -> createNewBucket());
         ConsumptionProbe probe = bucket.tryConsumeAndReturnRemaining(1);
+        return probe.getRemainingTokens();
 //        probe.isConsumed();
     }
 
